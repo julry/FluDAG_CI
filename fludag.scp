@@ -1,0 +1,2 @@
+method = scp
+scp_file = ~/run-templates/FluDAG_CI/build.sh
