@@ -3,6 +3,8 @@
 # We don't proceed unless the preceding step succeeded, and
 # we return the success or failure of the sequence.
 #
+# This version builds a moab stack with no cgm
+#
 set -x
 set -e
 
