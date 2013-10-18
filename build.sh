@@ -24,15 +24,24 @@ make install
 cd ..
 DIR=`pwd`
 
-cd FLUKA/flutil
+# Copy rfluka script that allows for longer filenames
+cd ./FLUKA/flutil
 cp rfluka rfluka.orig
 cd ../..
-cp DAGMC/FluDAG/src/rfluka FLUKA/flutil
-
+cp ./DAGMC/FluDAG/src/rfluka FLUKA/flutil
 DIR=`pwd`
-mkdir -p DAGMC/FluDAG/bld
-cd DAGMC/FluDAG/bld
-cmake ../src -DMOAB_HOME=`pwd`/../../../moab-4.6.2
+
+# Make the libflukahp.a library
+export FLUPRO=`pwd`/FLUKA
+export FLUFOR=gfortran
+cd ./FLUKA
+make
+cd ..
+DIR=`pwd`
+
+mkdir -p ./DAGMC/FluDAG/bld
+cd ./DAGMC/FluDAG/bld
+cmake ../src -DMOAB_HOME=`pwd`/../../../install
 make
 cd ../../..
 DIR=`pwd`
