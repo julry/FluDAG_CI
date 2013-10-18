@@ -1,5 +1,5 @@
 run_type    = build
-inputs      = fludag.scp, fetch/hdf5.url, fetch/moab.url
+inputs      = fludag.scp, fetch/hdf5.url, fetch/moab.url, fetch/dagmc.git, fetch/fluka.scp
 remote_task = build.sh
 platforms   = x86_64_Ubuntu12
 project     = FluDAG
