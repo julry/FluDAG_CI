@@ -9,16 +9,19 @@ set -x
 set -e
 
 DIR=`pwd`
-
-cd hdf5-1.8.11
-./configure --prefix=`pwd`/../install
+# Out of source build for hdf5.  
+mkdir `pwd`/bld_hdf5
+cd bld_hdf5
+../hdf5-1.8.11/configure --prefix=`pwd`/../install
 make
 make install
 cd ..
 DIR=`pwd`
 
-cd moab-4.6.2
-./configure --enable-optimize --enable-shared --disable-debug --without-netcdf --with-hdf5=`pwd`/../install --prefix=`pwd`/../install
+# Build moab with no CGM; save the build directory
+mkdir `pwd`/bld_moab
+cd bld_moab
+../moab-4.6.2/configure --enable-optimize --enable-shared --disable-debug --without-netcdf --with-hdf5=`pwd`/../install --prefix=`pwd`/../install
 make
 make install 
 cd ..
@@ -31,12 +34,12 @@ cd ../..
 cp ./DAGMC/FluDAG/src/rfluka FLUKA/flutil
 DIR=`pwd`
 
-# Make the libflukahp.a library
+# Do not need to make the libflukahp.a library, but do need the environment vars
 export FLUPRO=`pwd`/FLUKA
 export FLUFOR=gfortran
-cd ./FLUKA
-make
-cd ..
+# cd ./FLUKA
+# make
+# cd ..
 DIR=`pwd`
 
 mkdir -p ./DAGMC/FluDAG/bld
@@ -46,5 +49,6 @@ make
 cd ../../..
 DIR=`pwd`
 
-tar -czf results.tar.gz ./install ./FLUKA/flutil/rfluka* ./DAGMC/FluDAG/bld
+# Wrap up the results for downloading
+tar -czf results.tar.gz ./bld_hdf5 ./bld_moab ./install ./FLUKA/flutil/rfluka* ./DAGMC/FluDAG/bld
 exit $?
