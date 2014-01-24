@@ -1,3 +1,5 @@
-method = scp
-scp_file = ~/run-templates/FluDAG_CI/fluka/*
+
+method    = scp
+scp_file  = $HOME/fluka/*
 recursive = true
+
