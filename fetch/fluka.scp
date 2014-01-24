@@ -1,3 +1,5 @@
-method = scp
-scp_file = `pwd`/fluka/*
+
+method    = scp
+scp_file  = $HOME/fluka/*
 recursive = true
+

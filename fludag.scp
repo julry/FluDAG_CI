@@ -1,2 +1,5 @@
-method = scp
-scp_file = `pwd`/build.sh
+
+method    = scp
+scp_file  = /home/jczachman/run-templates/DAGMC-CI/build.sh
+recursive = true
+
