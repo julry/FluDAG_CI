@@ -1,2 +1,3 @@
-method    = scp
-scp_file  = /home/jczachman/run-templates/DAGMC-CI/null.sh
+method = scp
+scp_file = /home/jczachman/run-templates/DAGMC-CI/null.sh
+

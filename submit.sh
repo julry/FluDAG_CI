@@ -28,13 +28,13 @@ scp_file  = $path/build.SL5.sh
 
 echo  \
 "method = scp
-scp_file = $path/gcc_SL6/*
+scp_file = $HOME/gcc_SL6/*
 recursive = true
 ">$path/gcc.SL6.scp
 
 echo  \
 "method = scp
-scp_file = $path/gcc_SL5/*
+scp_file = $HOME/gcc_SL5/*
 recursive = true
 ">$path/gcc.SL5.scp
 
