@@ -19,6 +19,16 @@ make install
 cd ..
 DIR=`pwd`
 
+# The build failed when the following two lines were at the top of this script
+export LD_LIBRARY_PATH=`pwd`/gccSL6/lib:`pwd`/gccSL6/lib64:$LD_LIBRARY_PATH
+export PATH=`pwd`/gccSL6/bin:$PATH
+export CC=`pwd`/gccSL6/bin/gcc
+export CXX=`pwd`/gccSL6/bin/g++
+export FC=`pwd`/gccSL6/bin/gfortran
+export F77=`pwd`/gccSL6/bin/gfortran
+export CPPFLAGS=`pwd`/gccSL6/include
+export LDFLAGS=`pwd`/gccSL6/lib:`pwd`/gccSL6/lib64
+
 # Build moab with no CGM; save the build directory
 mkdir `pwd`/bld_moab
 cd bld_moab
@@ -36,8 +46,8 @@ cp ./DAGMC/FluDAG/src/rfluka FLUKA/flutil
 DIR=`pwd`
 
 # The build failed when the following two lines were at the top of this script
-export LD_LIBRARY_PATH=`pwd`/gccSL6/lib:`pwd`/gccSL6/lib64:$LD_LIBRARY_PATH
-export PATH=`pwd`/gccSL6/bin:$PATH
+# export LD_LIBRARY_PATH=`pwd`/gccSL6/lib:`pwd`/gccSL6/lib64:$LD_LIBRARY_PATH
+# export PATH=`pwd`/gccSL6/bin:$PATH
 
 # Do not need to make the libflukahp.a library, but do need the environment vars
 export FLUPRO=`pwd`/FLUKA
