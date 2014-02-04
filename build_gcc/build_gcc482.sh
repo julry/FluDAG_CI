@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
-tarball="gcc-4.8.2.tar.bz2"
+tarball="gcc-4.8.2-w-gmp-fix.tar.bz2"
 
 if ! [ -f "$tarball" ]; then
    echo "Error: tarball \"$tarball\" doesn't exist, or isn't a file" >&2
    exit 1
 fi
 
-builddir="${tarball%%.tar.bz2}"
+builddir="$(
+   echo $tarball \
+   | sed -r -n 's/^(gcc-[0-9]+\.[0-9]+\.[0-9]+).*/\1/p'
+)"
 exportdir="exportdir"
 outfile="results.tar.gz"
 mkdir -p "$exportdir"
@@ -28,3 +31,4 @@ pushd $exportdir
 tar czvf "${DIRSTACK[1]}/$outfile" *
 popd
 exit 0
+

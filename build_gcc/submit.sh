@@ -14,7 +14,7 @@ recursive = true
 
 echo "
 method    = scp
-scp_file  = $path/gcc-4.8.2.tar.bz2
+scp_file  = $path/gcc-4.8.2-w-gmp-fix.tar.bz2
 recursive = true
 ">$path/gcc-4.8.2.tar.bz2.scp
 
