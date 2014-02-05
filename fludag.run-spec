@@ -8,5 +8,5 @@ x86_SL5_remote_pre_declare         = build.SL5.sh
 remote_task = null.sh
 platforms   = x86_64_Ubuntu12, x86_64_Debian7, x86_64_Fedora18, x86_64_SL6, x86_SL5
 project     = DAGMC_CI platforms incl SL* 
-description = Local gcc 4.8.2 for SL*
-notify      = jczachman@wisc.edu, dagmcci@googlegroups.com
+description = Local gcc for all components SL6
+notify      = dagmcci@googlegroups.com
