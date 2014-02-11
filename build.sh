@@ -8,6 +8,7 @@
 set -x
 set -e
 
+OWD=`pwd`
 DIR=`pwd`
 # Out of source build for hdf5.  
 mkdir `pwd`/bld_hdf5
@@ -18,7 +19,7 @@ make install
 cd ..
 DIR=`pwd`
 
-# Build moab with no CGM; save the build directory
+# Build moab with no CGM 
 mkdir `pwd`/bld_moab
 cd bld_moab
 ../moab-4.6.2/configure --enable-optimize --enable-shared --disable-debug --without-netcdf --with-hdf5=`pwd`/../install --prefix=`pwd`/../install
@@ -37,18 +38,35 @@ DIR=`pwd`
 # Do not need to make the libflukahp.a library, but do need the environment vars
 export FLUPRO=`pwd`/FLUKA
 export FLUFOR=gfortran
-# cd ./FLUKA
-# make
-# cd ..
 DIR=`pwd`
 
+# Compile the fludag source and link it to the fludag and dagmc libraries
 mkdir -p ./DAGMC/FluDAG/bld
 cd ./DAGMC/FluDAG/bld
 cmake ../src -DMOAB_HOME=`pwd`/../../../install
 make
-cd ../../..
+
+# Make the gtest libraries so they are ready for the test phase
+cd $OWD/DAGMC/gtest
+mkdir `pwd`/lib
+cd lib
+cmake ../gtest-1.7.0
+make
 DIR=`pwd`
 
+# Configure and make the unit tests
+cd $OWD/DAGMC/FluDAG/src/test
+mkdir `pwd`/bld
+cd bld
+cmake \
+-D DAGMC_FLUDAG_SOURCE=$OWD/DAGMC/FluDAG/src/ \
+-D MOAB_HOME=$OWD/install   \
+-D GTEST_HOME=$OWD/DAGMC/gtest \
+..
+make
+
 # Wrap up the results for downloading
-tar -czf results.tar.gz ./bld_hdf5 ./bld_moab ./install ./FLUKA/flutil/rfluka* ./DAGMC/FluDAG/bld
+cd $OWD
+# tar -czf results.tar.gz ./bld_hdf5 ./bld_moab ./install ./FLUKA/flutil/rfluka* ./DAGMC/FluDAG/bld ./DAGMC/gtest/lib ./DAGMC/FluDAG/src/test
+tar -czf results.tar.gz ./install ./FLUKA/flutil/rfluka* ./DAGMC/FluDAG/bld ./DAGMC/gtest/lib ./DAGMC/FluDAG/src/test
 exit $?
