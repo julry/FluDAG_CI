@@ -6,11 +6,6 @@ then
 fi
 
 path=`pwd`
-echo  \
-"method = scp
-scp_file = $path/null.sh
-">$path/null.scp
-
 echo "
 method    = scp
 scp_file  = $path/build.sh
@@ -37,5 +32,15 @@ echo  \
 scp_file = $HOME/gcc_SL5/*
 recursive = true
 ">$path/gcc.SL5.scp
+
+echo \
+"method = scp
+scp_file = $HOME/generate_test_list.sh
+">$path/generate_test_list.scp
+
+echo \
+"method = scp
+scp_file = $HOME/run-test.sh
+">$path/run-test.scp
 
 nmi_submit $1
