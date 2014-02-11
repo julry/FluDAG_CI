@@ -11,14 +11,8 @@ echo "Building with local gcc 4.8.2"
 
 DIR=`pwd`
 # Ensure all components build with local gcc
-export LD_LIBRARY_PATH=`pwd`/gccSL6/lib:`pwd`/gccSL6/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=`pwd`/gccSL6/lib:`pwd`/gccSL6/lib64
 export PATH=`pwd`/gccSL6/bin:$PATH
-export CC=`pwd`/gccSL6/bin/gcc
-export CXX=`pwd`/gccSL6/bin/g++
-export FC=`pwd`/gccSL6/bin/gfortran
-export F77=`pwd`/gccSL6/bin/gfortran
-export CPPFLAGS=`pwd`/gccSL6/include
-export LDFLAGS=`pwd`/gccSL6/lib:`pwd`/gccSL6/lib64
 
 # Out of source build for hdf5.  
 mkdir `pwd`/bld_hdf5
@@ -26,9 +20,11 @@ cd bld_hdf5
 ../hdf5-1.8.11/configure --prefix=`pwd`/../install
 make
 make install
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:`pwd`/../install/lib
 cd ..
 DIR=`pwd`
 
+export LD_LIBRARY_PATH=`pwd`/gccSL6/lib:`pwd`/gccSL6/lib64
 # Build moab with no CGM; save the build directory
 mkdir `pwd`/bld_moab
 cd bld_moab
