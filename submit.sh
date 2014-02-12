@@ -35,12 +35,12 @@ recursive = true
 
 echo \
 "method = scp
-scp_file = $HOME/generate_test_list.sh
+scp_file = $path/generate_test_list.sh
 ">$path/generate_test_list.scp
 
 echo \
 "method = scp
-scp_file = $HOME/run-test.sh
+scp_file = $path/run-test.sh
 ">$path/run-test.scp
 
 nmi_submit $1
