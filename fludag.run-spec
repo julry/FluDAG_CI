@@ -10,5 +10,5 @@ platforms   = x86_64_Ubuntu12, x86_64_Debian7, x86_64_Fedora18, x86_64_SL6, x86_
 project     = Fludag Nightly Unit Testing  
 description = Build gtest; run nightly tests on all platforms
 notify      = dagmcci@googlegroups.com
-cron_hour   = 05
+cron_hour   = 07
 cron_minute = 55
