@@ -9,6 +9,7 @@ set -x
 set -e
 echo "Building with local gcc 4.8.2"
 
+OWD=`pwd`
 DIR=`pwd`
 # Out of source build for hdf5.  
 mkdir `pwd`/bld_hdf5
@@ -45,12 +46,32 @@ export FLUFOR=gfortran
 DIR=`pwd`
 mkdir -p ./DAGMC/FluDAG/bld
 cd ./DAGMC/FluDAG/bld
-
 cmake ../src -DMOAB_HOME=`pwd`/../../../install
 make
-cd ../../..
+# cd ../../..
+# DIR=`pwd`
+
+# Make the gtest libraries so they are ready for the test phase
+cd $OWD/DAGMC/gtest
+mkdir `pwd`/lib
+cd lib
+cmake ../gtest-1.7.0
+make
 DIR=`pwd`
 
+# Configure and make the unit tests
+cd $OWD/DAGMC/FluDAG/src/test
+mkdir `pwd`/bld
+cd bld
+cmake \
+-D DAGMC_FLUDAG_SOURCE=$OWD/DAGMC/FluDAG/src/ \
+-D MOAB_HOME=$OWD/install   \
+-D GTEST_HOME=$OWD/DAGMC/gtest \
+..
+make
+
 # Wrap up the results for downloading
-tar -czf results.tar.gz ./bld_hdf5 ./bld_moab ./install ./FLUKA/flutil/rfluka* ./DAGMC/FluDAG/bld
+cd $OWD
+# tar -czf results.tar.gz ./bld_hdf5 ./bld_moab ./install ./FLUKA/flutil/rfluka* ./DAGMC/FluDAG/bld ./DAGMC/gtest/lib ./DAGMC/FluDAG/src/test
+tar -czf results.tar.gz ./install ./FLUKA/flutil/rfluka* ./DAGMC/FluDAG/bld ./DAGMC/gtest/lib ./DAGMC/FluDAG/src/test
 exit $?

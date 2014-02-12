@@ -6,18 +6,18 @@ then
 fi
 
 path=`pwd`
-echo "
-method    = scp
+echo \
+"method    = scp
 scp_file  = $path/build.sh
 ">$path/build.scp
 
-echo "
-method    = scp
+echo \
+"method    = scp
 scp_file  = $path/build.SL6.sh
 ">$path/build.SL6.scp
 
-echo "
-method    = scp
+echo \
+"method    = scp
 scp_file  = $path/build.SL5.sh
 ">$path/build.SL5.scp
 
