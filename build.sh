@@ -36,14 +36,17 @@ cp ./DAGMC/FluDAG/src/rfluka FLUKA/flutil
 DIR=`pwd`
 
 # Do not need to make the libflukahp.a library, but do need the environment vars
-export FLUPRO=`pwd`/FLUKA
+export FLUPRO=$OWD/FLUKA
 export FLUFOR=gfortran
 DIR=`pwd`
 
 # Compile the fludag source and link it to the fludag and dagmc libraries
 mkdir -p ./DAGMC/FluDAG/bld
 cd ./DAGMC/FluDAG/bld
-cmake ../src -DMOAB_HOME=`pwd`/../../../install
+# cmake ../src -DMOAB_HOME=`pwd`/../../../install
+cmake \
+-D MOAB_HOME=$OWD/install \
+../src 
 make
 
 # Make the gtest libraries so they are ready for the test phase

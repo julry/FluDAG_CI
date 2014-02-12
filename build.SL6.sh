@@ -12,8 +12,8 @@ echo "Building with local gcc 4.8.2"
 OWD=`pwd`
 DIR=`pwd`
 # Ensure all components build with local gcc
-export LD_LIBRARY_PATH=`pwd`/gccSL6/lib:`pwd`/gccSL6/lib64
-export PATH=`pwd`/gccSL6/bin:$PATH
+export LD_LIBRARY_PATH=$OWD/gccSL6/lib:$OWD/gccSL6/lib64
+export PATH=$OWD/gccSL6/bin:$PATH
 
 # Out of source build for hdf5.  
 mkdir `pwd`/bld_hdf5
@@ -25,7 +25,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:`pwd`/../install/lib
 cd ..
 DIR=`pwd`
 
-export LD_LIBRARY_PATH=`pwd`/gccSL6/lib:`pwd`/gccSL6/lib64
+# export LD_LIBRARY_PATH=`pwd`/gccSL6/lib:`pwd`/gccSL6/lib64
 # Build moab with no CGM; save the build directory
 mkdir `pwd`/bld_moab
 cd bld_moab
@@ -47,7 +47,7 @@ DIR=`pwd`
 # export PATH=`pwd`/gccSL6/bin:$PATH
 
 # Do not need to make the libflukahp.a library, but do need the environment vars
-export FLUPRO=`pwd`/FLUKA
+export FLUPRO=$OWD/FLUKA
 export FLUFOR=gfortran
 DIR=`pwd`
 mkdir -p ./DAGMC/FluDAG/bld
