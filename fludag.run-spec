@@ -12,4 +12,4 @@ project        = Fludag Nightly Unit Testing
 description    = Build gtest; run nightly tests on all platforms
 notify         = dagmcci@googlegroups.com
 cron_hour      = 15
-cron_minute    = 05
+cron_minute    = 15
