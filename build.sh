@@ -32,32 +32,28 @@ mkdir $OWD/bld_moab
 cd bld_moab
 # make moab install dir
 mkdir $OWD/moab
-../moab-4.6.2/configure --enable-optimize --enable-shared --disable-debug --without-netcdf --with-hdf5=$OWD/hdf5 --prefix=$OWD/moab
-make
-make install 
+# ../moab-4.6.2/configure --enable-optimize --enable-shared --disable-debug --without-netcdf --with-hdf5=$OWD/hdf5 --prefix=$OWD/moab
+# make
+# make install 
 # set the shared lib path
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/moab/lib
 # dont need them but may be useful
 export PATH=$PATH:$OWD/moab/bin
 cd ..
 
-
 # Copy rfluka script that allows for longer filenames
 cd ./FLUKA/flutil
 cp rfluka rfluka.orig
 cd ../..
 cp ./DAGMC/FluDAG/src/rfluka FLUKA/flutil
-#DIR=`pwd`
 
 # Do not need to make the libflukahp.a library, but do need the environment vars
 export FLUPRO=$OWD/FLUKA
 export FLUFOR=gfortran
-#DIR=`pwd`
 
 # Compile the fludag source and link it to the fludag and dagmc libraries
 mkdir -p ./DAGMC/FluDAG/bld
 cd ./DAGMC/FluDAG/bld
-# cmake ../src -DMOAB_HOME=`pwd`/../../../install
 cmake \
 -D MOAB_HOME=$OWD/moab \
 ../src 
