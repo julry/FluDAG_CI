@@ -1,3 +1,4 @@
+#!/bin/sh
 
 if [ -z $1 ]
 then
@@ -51,8 +52,7 @@ scp_file = $path/run-test.sh
 
 echo \
 "method = scp
-scp_file  = $HOME/fluka/*
-recursive = true
-">$path/fluka.scp
+scp_file = $path/env.sh
+">$path/env.scp
 
 nmi_submit $1
