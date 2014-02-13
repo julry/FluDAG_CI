@@ -13,9 +13,13 @@ DIR=`pwd`
 # Out of source build for hdf5.  
 mkdir `pwd`/bld_hdf5
 cd bld_hdf5
-../hdf5-1.8.11/configure --prefix=`pwd`/../install
+../hdf5-1.8.11/configure --enable-shared --prefix=`pwd`/../install
 make
 make install
+# set the shared lib path
+export LD_LIBRARY_PATH=`pwd`/../install/lib
+# dont need these, but may prove useful in future
+export PATH=$PATH:`pwd`/../install/bin
 cd ..
 DIR=`pwd`
 
@@ -25,6 +29,10 @@ cd bld_moab
 ../moab-4.6.2/configure --enable-optimize --enable-shared --disable-debug --without-netcdf --with-hdf5=`pwd`/../install --prefix=`pwd`/../install
 make
 make install 
+# set the shared lib path
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:`pwd`/../install/lib
+# dont need them but may be useful
+export PATH=$PATH:`pwd`/../install/bin
 cd ..
 DIR=`pwd`
 
