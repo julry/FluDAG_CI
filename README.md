@@ -31,7 +31,9 @@ If you are testing scripts and want to run from your own private batlab login, t
 be submitted by typing:
 
 $ ./submit.sh fludag.run-spec    // RIGHT
+
 and not 
+
 $ ./nmi_submit fludag.run-spec   // WRONG
 
 Initiating a job
@@ -48,7 +50,10 @@ _____________________________
 Note:  See the Command Line Tools in the online BaTLab Reference Manual
 
 $ nmi_list_recurring_runs
+
 	-- get the recurring run id of the job you want to kill
 	-- should end in .0
+
 $ nmi_rm <recurring run id>
+
 $ nmi_submit recurring_job.run-spec
