@@ -71,7 +71,7 @@ mkdir `pwd`/bld
 cd bld
 cmake \
 -D DAGMC_FLUDAG_SOURCE=$OWD/DAGMC/FluDAG/src/ \
--D MOAB_HOME=$OWD/install   \
+-D MOAB_HOME=$OWD/bld_moab/install   \
 -D GTEST_HOME=$OWD/DAGMC/gtest \
 ..
 make
