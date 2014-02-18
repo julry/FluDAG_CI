@@ -1,10 +1,33 @@
 DAGMC_CI
 =========
 
-This contains the files necessary to run Continuous Integration and Test on batlab.org
-The scripts used to submit the run are in github.com/DAGMC-CI, master branch.
-The build created will be github.com/DAGMC, whichever branch was the subject of the initiating
-pull request on the DAGMC repository.
+Files necessary to run Continuous Integration and Test on batlab.org are contained in this 
+repository, github.com/DAGMC-CI, master branch.
+There are two types of build-and-test:
+
+1.  Pull-generated build-and-test
+
+When a developer generates a pull request from a feature branch to the _develop branch 
+on github.com/DAGMC ('DAGMC') a one-off batlab build-and-test is executed using the
+feature branch.
+
+The pull-generated build-and-test ensures that developers do not check in code that has
+deleterious side effects.
+
+The auto-generated build-and-test runs under dagmcci@submit-1.batlab.org, within a 
+subdirectory as
+> ./submit fludag.run-spec
+ 
+2.  Nightly build-and-test
+
+Nightly builds are setup manually and launched from an individual batlab account.
+The build created will be the github.com/DAGMC develop branch.
+
+The nightly build-and-test ensures that software dependencies and third party updates
+have not broken FluDAG.
+
+It is launched from the cloned DAGMC-CI repository with
+> ./submit_nightly.sh fludag_nightly.run-spec
 
 GIT Repository
 _______________

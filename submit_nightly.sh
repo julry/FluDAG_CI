@@ -8,11 +8,11 @@ fi
 
 path=`pwd`
 echo \
-"method   = scp
-scp_file  = $path/build.sh
+"method  = scp
+scp_file = $path/build.sh
 ">$path/build.scp
 
-echo 
+echo \
 "method  = scp
 scp_file = $path/build.SL6.sh
 ">$path/build.SL6.scp
@@ -49,10 +49,5 @@ echo \
 "method  = scp
 scp_file = $path/run-test.sh
 ">$path/run-test.scp
-
-echo \
-"method  = scp
-scp_file = $path/env.sh
-">$path/env.scp
 
 nmi_submit $1
