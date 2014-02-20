@@ -46,7 +46,7 @@ export FLUFOR=gfortran
 DIR=`pwd`
 mkdir -p ./DAGMC/FluDAG/bld
 cd ./DAGMC/FluDAG/bld
-cmake ../src -DMOAB_HOME=`pwd`/../../../install
+cmake ../src -DMOAB_HOME=`pwd`/../../../install -DDAGMC_FLUDAG_SOURCE=$OWD/DAGMC/FluDAG/src/
 make
 # cd ../../..
 # DIR=`pwd`

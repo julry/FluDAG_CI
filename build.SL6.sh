@@ -11,10 +11,12 @@ set -e
 echo "Building with local gcc 4.8.2"
 
 OWD=`pwd`
+./env.sh
 
 # Ensure all components build with local gcc
 export LD_LIBRARY_PATH=$OWD/gccSL6/lib:$OWD/gccSL6/lib64
 export PATH=$OWD/gccSL6/bin:$PATH
+
 
 # Out of source build for hdf5.  
 mkdir $OWD/bld_hdf5
@@ -65,6 +67,7 @@ make
 # Make the gtest libraries so they are ready for the test phase
 # NOTE:  this should be part of the fludag build
 cd $OWD/DAGMC/gtest
+# mkdir `pwd`/lib
 mkdir `pwd`/lib
 cd lib
 cmake ../gtest-1.7.0

@@ -54,9 +54,11 @@ export FLUFOR=gfortran
 # Compile the fludag source and link it to the fludag and dagmc libraries
 mkdir -p ./DAGMC/FluDAG/bld
 cd ./DAGMC/FluDAG/bld
-cmake \
--D MOAB_HOME=$OWD/moab \
-../src 
+cmake ../src -DMOAB_HOME=$OWD/moab -DDAGMC_FLUDAG_SOURCE=$OWD/DAGMC/FluDAG/src/
+# cmake \
+# -D DAGMC_FLUDAG_SOURCE=$OWD/DAGMC/FluDAG/src/ \
+# -D MOAB_HOME=$OWD/moab \
+# ../src 
 make
 
 # Make the gtest libraries so they are ready for the test phase
