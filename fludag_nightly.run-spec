@@ -1,12 +1,11 @@
 run_type = test
-inputs   =  env.scp, fetch/hdf5.url, fetch/moab.url, fetch/dagmc.git, fluka.scp, run-test.scp, generate_test_list.scp, gcc.SL6.scp, gcc.SL5.scp, build.scp, build.SL6.scp, build.SL5.scp
+inputs   =  fetch/hdf5.url, fetch/moab.url, fetch/dagmc.git, fluka.scp, run-test.scp, generate_test_list.scp, gcc.SL6.scp, build.scp, build.SL6.scp 
 x86_64_Debian7_remote_pre_declare  = build.sh
 x86_64_Ubuntu12_remote_pre_declare = build.sh
 x86_64_Fedora18_remote_pre_declare = build.sh
-x86_SL5_remote_pre_declare         = build.SL5.sh
 remote_declare = generate_test_list.sh
 remote_task    = run-test.sh
-platforms      = x86_SL5, x86_64_Debian7, x86_64_Ubuntu12, x86_64_Fedora18
+platforms      = x86_64_Debian7, x86_64_Ubuntu12, x86_64_Fedora18
 project        = Fludag Nightly Unit Testing  
 description    = Run tests on all known good platforms
 notify         = dagmcci@googlegroups.com

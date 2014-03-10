@@ -17,22 +17,11 @@ echo \
 scp_file = $path/build.SL6.sh
 ">$path/build.SL6.scp
 
-echo \
-"method  = scp
-scp_file = $path/build.SL5.sh
-">$path/build.SL5.scp
-
 echo  \
 "method   = scp
 scp_file  = $HOME/gcc_SL6/*
 recursive = true
 ">$path/gcc.SL6.scp
-
-echo  \
-"method   = scp
-scp_file  = $HOME/gcc_SL5/*
-recursive = true
-">$path/gcc.SL5.scp
 
 echo \
 "method   = scp

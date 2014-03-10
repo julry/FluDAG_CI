@@ -11,7 +11,7 @@ set -e
 echo "Building with local gcc 4.8.2"
 
 OWD=`pwd`
-./env.sh
+# ./env.sh
 
 # Ensure all components build with local gcc
 export LD_LIBRARY_PATH=$OWD/gccSL6/lib:$OWD/gccSL6/lib64
@@ -29,7 +29,7 @@ make install
 # add to the shared lib path
 #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/hdf5/lib
 # dont need these, but may prove useful in future
-#export PATH=$PATH:$OWD/hdf5/bin
+export PATH=$PATH:$OWD/hdf5/bin
 cd ..
 # back in $OWD
 
@@ -46,28 +46,27 @@ make install
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/moab/lib
 # dont need them but may be useful
 export PATH=$PATH:$OWD/moab/bin
-cd ..
-
-# Copy rfluka script that allows for longer filenames
-cd ./FLUKA/flutil
-cp rfluka rfluka.orig
-cd ../..
-cp ./DAGMC/FluDAG/src/rfluka FLUKA/flutil
+# cd ..
 
 # Do not need to make the libflukahp.a library, but do need the environment vars
 export FLUPRO=$OWD/FLUKA
 export FLUFOR=gfortran
 
+# Copy rfluka script that allows for longer filenames
+cd $FLUPRO/flutil
+cp rfluka rfluka.orig
+cp $OWD/DAGMC/FluDAG/src/rfluka . 
+
 # Compile the fludag source and link it to the fludag and dagmc libraries
-mkdir -p ./DAGMC/FluDAG/bld
-cd ./DAGMC/FluDAG/bld
-cmake -D MOAB_HOME=$OWD/moab ../src 
+cd $OWD
+mkdir -p $OWD/DAGMC/FluDAG/bld
+cd $OWD/DAGMC/FluDAG/bld 
+cmake ../src -DMOAB_HOME=$OWD/moab -DFLUDAG_SOURCE=$OWD/DAGMC/FluDAG/src/
 make
 
 # Make the gtest libraries so they are ready for the test phase
 # NOTE:  this should be part of the fludag build
 cd $OWD/DAGMC/gtest
-# mkdir `pwd`/lib
 mkdir `pwd`/lib
 cd lib
 cmake ../gtest-1.7.0
