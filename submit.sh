@@ -8,51 +8,35 @@ fi
 
 path=`pwd`
 echo \
-"method    = scp
-scp_file  = $path/build.sh
+"method  = scp
+scp_file = $path/build.sh
 ">$path/build.scp
 
 echo \
-"method    = scp
-scp_file  = $path/build.SL6.sh
+"method  = scp
+scp_file = $path/build.SL6.sh
 ">$path/build.SL6.scp
 
-echo \
-"method    = scp
-scp_file  = $path/build.SL5.sh
-">$path/build.SL5.scp
-
 echo  \
-"method = scp
-scp_file = $HOME/gcc_SL6/*
+"method   = scp
+scp_file  = $HOME/gcc_SL6/*
 recursive = true
 ">$path/gcc.SL6.scp
 
-echo  \
-"method = scp
-scp_file = $HOME/gcc_SL5/*
-recursive = true
-">$path/gcc.SL5.scp
-
 echo \
-"method = scp
+"method   = scp
 scp_file  = $HOME/fluka/*
 recursive = true
 ">$path/fluka.scp
 
 echo \
-"method = scp
+"method  = scp
 scp_file = $path/generate_test_list.sh
 ">$path/generate_test_list.scp
 
 echo \
-"method = scp
+"method  = scp
 scp_file = $path/run-test.sh
 ">$path/run-test.scp
-
-echo \
-"method = scp
-scp_file = $path/env.sh
-">$path/env.scp
 
 nmi_submit $1

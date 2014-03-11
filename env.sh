@@ -1,2 +1,2 @@
 #!/bin/sh
-env > env.text
+env > env.txt
