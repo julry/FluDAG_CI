@@ -16,7 +16,7 @@ dagmcci@submit-1.batlab.org login.
 
 > ./submit fludag.run-spec
  
-1.  Nightly build-and-test
+2.  Nightly build-and-test
 
 Nightly builds are setup manually and launched from an individual batlab account.
 The build created will be the github.com/DAGMC develop branch.
@@ -78,3 +78,18 @@ $ nmi_list_recurring_runs
 $ nmi_rm <recurring run id>
 
 $ nmi_submit recurring_job.run-spec
+
+Setting up Git
+_____________
+
+Place the following lines in the home directory in a file called '.gitconfig':
+
+
+[user]
+	name = dagmcci
+	email = dagmcci@googlegroups.com
+[alias]
+	co = checkout
+	st = status
+	plog = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s%Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --graph --decorate --date=relative
+
