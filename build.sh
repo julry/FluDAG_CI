@@ -45,10 +45,10 @@ export PATH=$PATH:$OWD/moab/bin
 export FLUPRO=$OWD/FLUKA
 export FLUFOR=gfortran
 
-# Copy rfluka script that allows for longer filenames
-cd $FLUPRO/flutil
-cp rfluka rfluka.orig
-cp $OWD/DAGMC/FluDAG/src/rfluka . 
+# Patch rfluka script so that it allows for longer filenames
+cd $OWD
+cp $FLUPRO/flutil/rfluka $FLUPRO/flutil/rfluka.orig
+patch $FLUPRO/flutil/rfluka $OWD/DAGMC/FluDAG/src/rfluka.patch 
 
 # Compile the fludag source and link it to the fludag and dagmc libraries
 cd $OWD
@@ -58,6 +58,14 @@ cmake ../src -DMOAB_HOME=$OWD/moab
 make 
 
 # Configure and make the gtest libs and unit tests
+# Make the gtest libraries so they are ready for the test phase
+# NOTE:  this should be part of the fludag build
+cd $OWD/DAGMC/gtest
+mkdir `pwd`/lib
+cd lib
+cmake ../gtest-1.7.0
+make
+
 cd $OWD/DAGMC/FluDAG/src/test
 mkdir `pwd`/bld
 cd bld
