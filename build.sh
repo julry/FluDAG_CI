@@ -66,11 +66,14 @@ cd lib
 cmake ../gtest-1.7.0
 make
 
+# Configure and make the unit tests
 cd $OWD/DAGMC/FluDAG/src/test
 mkdir `pwd`/bld
 cd bld
 cmake \
+-D FLUDAG_SOURCE=$OWD/DAGMC/FluDAG/src/ \
 -D MOAB_HOME=$OWD/moab   \
+-D GTEST_HOME=$OWD/DAGMC/gtest \
 ..
 make
 
