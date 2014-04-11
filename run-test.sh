@@ -1,3 +1,3 @@
 #! /bin/bash
-cd DAGMC/FluDAG/src/test/bld
+cd DAGMC/FluDAG/bld/test
 ctest -R ${_NMI_TASKNAME}
