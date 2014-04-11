@@ -82,5 +82,5 @@ make
 # Wrap up the results for downloading
 cd $OWD
 # tar -czf results.tar.gz ./bld_hdf5 ./bld_moab ./install ./FLUKA/flutil/rfluka* ./DAGMC/FluDAG/bld ./DAGMC/gtest/lib ./DAGMC/FluDAG/src/test
-tar -pczf results.tar.gz moab hdf5 FLUKA/flutil/rfluka* DAGMC/FluDAG/bld DAGMC/gtest/lib DAGMC/FluDAG/src/test
+tar -pczf results.tar.gz moab hdf5 FLUKA/flutil/rfluka* DAGMC/FluDAG/bld DAGMC/gtest/lib 
 exit $?
