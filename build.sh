@@ -25,7 +25,6 @@ export LD_LIBRARY_PATH=$OWD/hdf5/lib
 # dont need these, but may prove useful in future
 export PATH=$PATH:$OWD/hdf5/bin
 cd ..
-# back in $OWD
 
 # Build moab with no CGM 
 mkdir $OWD/bld_moab
@@ -52,11 +51,12 @@ patch $FLUPRO/flutil/rfluka $OWD/DAGMC/FluDAG/src/rfluka.patch
 # Configure and make the gtest libs and unit tests
 # Make the gtest libraries so they are ready for the test phase
 # NOTE:  this will  be part of the fludag build soon
-cd $OWD/DAGMC/gtest
-mkdir `pwd`/lib
-cd lib
-cmake ../gtest-1.7.0
-make
+
+# cd $OWD/DAGMC/gtest
+# mkdir `pwd`/lib
+# cd lib
+# cmake ../gtest-1.7.0
+# /.make
 
 # Compile the fludag source and link it to the fludag and dagmc libraries
 cd $OWD
@@ -68,19 +68,7 @@ cd $OWD/DAGMC/FluDAG/bld
 cmake .. -DMOAB_HOME=$OWD/moab 
 make 
 
-# Configure and make the unit tests
-# cd $OWD/DAGMC/FluDAG/src/test
-# mkdir `pwd`/bld
-# cd bld
-# cmake \
-# -D FLUDAG_SOURCE=$OWD/DAGMC/FluDAG/src/ \
-# -D MOAB_HOME=$OWD/moab   \
-# -D GTEST_HOME=$OWD/DAGMC/gtest \
-# ..
-# make
-
 # Wrap up the results for downloading
 cd $OWD
-# tar -czf results.tar.gz ./bld_hdf5 ./bld_moab ./install ./FLUKA/flutil/rfluka* ./DAGMC/FluDAG/bld ./DAGMC/gtest/lib ./DAGMC/FluDAG/src/test
-tar -pczf results.tar.gz moab hdf5 FLUKA/flutil/rfluka* DAGMC/FluDAG/bld DAGMC/gtest/lib 
+tar -pczf results.tar.gz moab hdf5 FLUKA/flutil/rfluka* DAGMC/FluDAG/bld 
 exit $?
