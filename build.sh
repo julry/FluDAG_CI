@@ -65,7 +65,7 @@ cd $OWD/DAGMC/FluDAG/bld
 # This step runs cmake on a new, higher level CMakeLists.txt.
 # Both the mainfludag and the tests will be built
 # subdirectories will be made in the build directory for src and tests
-cmake .. -DMOAB_HOME=$OWD/moab 
+cmake -DMOAB_HOME=$OWD/moab ..
 make 
 
 # Wrap up the results for downloading
