@@ -35,6 +35,12 @@ scp_file = $path/generate_test_list.sh
 ">$path/generate_test_list.scp
 
 echo \
+"method   = scp
+scp_file  = $path/gen_test_list.py
+recursive = true
+">$path/gen_test_list.py.scp
+
+echo \
 "method  = scp
 scp_file = $path/run-test.sh
 ">$path/run-test.scp

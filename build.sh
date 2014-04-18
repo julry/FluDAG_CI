@@ -48,16 +48,6 @@ cd $OWD
 cp $FLUPRO/flutil/rfluka $FLUPRO/flutil/rfluka.orig
 patch $FLUPRO/flutil/rfluka $OWD/DAGMC/FluDAG/src/rfluka.patch 
 
-# Configure and make the gtest libs and unit tests
-# Make the gtest libraries so they are ready for the test phase
-# NOTE:  this will  be part of the fludag build soon
-
-# cd $OWD/DAGMC/gtest
-# mkdir `pwd`/lib
-# cd lib
-# cmake ../gtest-1.7.0
-# /.make
-
 # Compile the fludag source and link it to the fludag and dagmc libraries
 cd $OWD
 mkdir -p $OWD/DAGMC/FluDAG/bld
