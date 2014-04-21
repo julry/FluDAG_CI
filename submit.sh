@@ -14,14 +14,14 @@ scp_file = $path/build.sh
 
 echo \
 "method  = scp
-scp_file = $path/build.SL6.sh
-">$path/build.SL6.scp
+scp_file = $path/build.sl6.sh
+">$path/build.sl6.scp
 
 echo  \
 "method   = scp
 scp_file  = $HOME/gcc_SL6/*
 recursive = true
-">$path/gcc.SL6.scp
+">$path/gcc.sl6.scp
 
 echo \
 "method   = scp
