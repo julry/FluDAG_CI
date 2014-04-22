@@ -1,5 +1,5 @@
 #!/bin/sh
-# build.SL6.sh
+# build.sl6.sh
 #
 # We don't proceed unless the preceding step succeeded, and
 # we return the success or failure of the sequence.
