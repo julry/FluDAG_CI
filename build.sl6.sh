@@ -73,6 +73,9 @@ mkdir $OWD/bld_moab
 cd bld_moab
 # make moab install dir
 #mkdir $OWD/moab
+cd ../moab
+autoreconf -fi
+cd ../bld_moab
 ../moab/configure --enable-optimize --enable-shared --disable-debug --without-netcdf --with-hdf5=$OWD/hdf5 --prefix=$OWD/moab
 make
 make install 
@@ -105,7 +108,7 @@ make
 cd $OWD
 mkdir -p $OWD/geant4/bld
 cd $OWD/geant4/bld
-cmake ../geant4.10.00.p01/. -DCMAKE_INSTALL_PREFIX=$OWD/geant4
+cmake ../../geant4.10.00.p01/. -DCMAKE_INSTALL_PREFIX=$OWD/geant4
 make
 make install
 
