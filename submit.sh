@@ -15,7 +15,7 @@ scp_file = $path/build.sh
 echo \
 "method  = scp
 scp_file = $path/build.sl6.sh
-">$path/build.sl6.scp
+">$path/build.test.sl6.scp
 
 echo  \
 "method   = scp
