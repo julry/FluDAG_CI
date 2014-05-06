@@ -31,6 +31,9 @@ mkdir $OWD/bld_moab
 cd bld_moab
 # make moab install dir
 # already made by git
+cd ../moab
+autoreconf -fi
+cd ../bld_moab
 ../moab/configure --enable-optimize --enable-shared --disable-debug --without-netcdf --with-hdf5=$OWD/hdf5 --prefix=$OWD/moab
 make
 make install 
@@ -62,21 +65,30 @@ make
 cd $OWD
 mkdir -p $OWD/geant4/bld
 cd $OWD/geant4/bld
-cmake ../geant4.10.00.p01/. -DCMAKE_INSTALL_PREFIX=$OWD/geant4
+cmake ../../geant4.10.00.p01/. -DCMAKE_INSTALL_PREFIX=$OWD/geant4
 make
 make install
 
+# on redhat systems geant installs to a lib64 rather than lib
+# copy rather than link to avoid downstream linking issues
+if [ ! -d "$OWD/geant4/lib" ] ; then
+    cp -r $OWD/geant4/lib64 $OWD/geant4/lib 
+fi
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
+
+
 # compile DagSolid
 cd $OWD
-mkdir -p $OWD/Geant4/dagsolid/bld
-cd $OWD/Geant4/dagsolid/bld
+mkdir -p $OWD/DAGMC/Geant4/dagsolid/bld
+cd $OWD/DAGMC/Geant4/dagsolid/bld
 # This step runs cmake on a new, higher level CMakeLists.txt.
 # Both the mainfludag and the tests will be built
 # subdirectories will be made in the build directory for src and tests
-cmake ../. -DMOAB_DIR=$OWD/moab -DGEANT_DIR=$OWD/geant4 -DDAGSOLID_DIR=$OWD/Geant4/dagsolid
+cmake ../. -DMOAB_DIR=$OWD/moab -DGEANT_DIR=$OWD/geant4 -DDAGSOLID_DIR=$OWD/DAGMC/Geant4/dagsolid
 make 
 make install
-
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/DAGMC/Geant4/dagsolid/lib
+ 
 
 
 # Wrap up the results for downloading
