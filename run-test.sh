@@ -9,4 +9,9 @@ export PATH=${gccdir}/bin:$PATH
 cd DAGMC/FluDAG/bld/tests
 ./fludag_unit_tests --gtest_filter=`echo ${_NMI_TASKNAME} | sed -e 's/__/\//g' | sed -e 's/FLUDAG.//g'`
 
+cd ../../../..
+cd DAGMC/Geant4/dagsolid/bld/tests
+./dagsolid_unit_tests --gtest_filter=`echo ${_NMI_TASKNAME} | sed -e 's/__/\//g' | sed -e 's/DAGSOLID.//g'`
+
+
 exit $?
