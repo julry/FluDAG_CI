@@ -1,5 +1,5 @@
 run_type = test
-inputs   =  fetch/hdf5.url, fetch/moab.url, fetch/dagmc.git, fluka.scp, run-test.scp, generate_test_list.scp, gen_test_list.py.scp, gcc.sl6.scp, build.scp, build.sl6.scp
+inputs   =  fetch/hdf5.url, fetch/geant4.url, fetch/dagmc.git, fetch/moab.git, fluka.scp, run-test.scp, generate_test_list.scp, gen_test_list.py.scp, gcc.sl6.scp, build.scp, build.sl6.scp
 x86_64_Debian7_remote_pre_declare  = build.sh
 x86_64_Ubuntu12_remote_pre_declare = build.sh
 x86_64_Fedora18_remote_pre_declare = build.sh
@@ -10,5 +10,5 @@ platforms      = x86_64_Debian7, x86_64_Ubuntu12, x86_64_Fedora18, x86_64_SL6
 project        = Fludag Nightly Unit Testing  
 description    = Nightly tests: SL6, automated test generation
 notify         = dagmcci@googlegroups.com
-cron_hour      = 14
-cron_minute    = 25
+cron_hour      = 00
+cron_minute    = 01
