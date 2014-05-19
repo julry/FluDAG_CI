@@ -11,7 +11,6 @@ set -e
 echo "Building with local gcc 4.8.2"
 
 OWD=`pwd`
-# ./env.sh
 
 gccdir="$PWD/gccSL6"
 
