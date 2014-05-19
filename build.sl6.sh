@@ -49,8 +49,7 @@ function fix_libtool {
 fix_libtool
 
 # Ensure all components build with local gcc
-export LD_LIBRARY_PATH=${gccdir}/lib:${gccdir}/lib64
-export PATH=${gccdir}/bin:$PATH
+./source general_exports.sh
 
 # Out of source build for hdf5.  
 mkdir $OWD/bld_hdf5
@@ -61,8 +60,6 @@ mkdir $OWD/hdf5
 make
 make install
 # add to the shared lib path
-#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/hdf5/lib
-# dont need these, but may prove useful in future
 export PATH=$PATH:$OWD/hdf5/bin
 cd ..
 # back in $OWD
@@ -71,7 +68,6 @@ cd ..
 mkdir $OWD/bld_moab
 cd bld_moab
 # make moab install dir
-#mkdir $OWD/moab
 cd ../moab
 autoreconf -fi
 cd ../bld_moab
@@ -118,8 +114,6 @@ fi
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
 
-
-
 # compile DagSolid
 cd $OWD
 mkdir -p $OWD/DAGMC/Geant4/dagsolid/bld
@@ -131,8 +125,6 @@ cmake ../. -DMOAB_DIR=$OWD/moab -DGEANT_DIR=$OWD/geant4 -DDAGSOLID_DIR=$OWD/DAGM
 make 
 make install
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/DAGMC/Geant4/dagsolid/lib
-
-
 
 # Wrap up the results for downloading
 cd $OWD
