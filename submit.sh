@@ -12,12 +12,6 @@ echo \
 scp_file = $path/*.sh
 ">$path/scripts.scp
 
-echo  \
-"method   = scp
-scp_file  = $HOME/gcc_SL6/*
-recursive = true
-">$path/gcc.sl6.scp
-
 echo \
 "method   = scp
 scp_file  = $HOME/fluka/*

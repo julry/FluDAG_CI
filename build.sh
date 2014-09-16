@@ -76,7 +76,15 @@ if [ ! -d "$OWD/geant4/lib" ] ; then
 fi
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
 
+cd $OWD
+cd DAGMC
+mkdir bld
+cd bld
+cmake ../. -DMOAB_DIR=$OWD/moab/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4=$OWD/geant4 -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC/
+make
+make install
 
+export LD_LIBRARY_PATH=$LD_LIBRARYpATH:$owd/DAGMC/lib 
 # compile DagSolid
 cd $OWD
 mkdir -p $OWD/DAGMC/Geant4/dagsolid/bld
