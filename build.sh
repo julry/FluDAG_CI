@@ -51,16 +51,6 @@ cd $OWD
 cp $FLUPRO/flutil/rfluka $FLUPRO/flutil/rfluka.orig
 patch $FLUPRO/flutil/rfluka $OWD/DAGMC/FluDAG/src/rfluka.patch 
 
-# Compile the fludag source and link it to the fludag and dagmc libraries
-cd $OWD
-mkdir -p $OWD/DAGMC/FluDAG/bld
-cd $OWD/DAGMC/FluDAG/bld 
-# This step runs cmake on a new, higher level CMakeLists.txt.
-# Both the mainfludag and the tests will be built
-# subdirectories will be made in the build directory for src and tests
-cmake -DMOAB_HOME=$OWD/moab ..
-make 
-
 # compile geant4
 cd $OWD
 mkdir -p $OWD/geant4/bld
@@ -76,8 +66,7 @@ if [ ! -d "$OWD/geant4/lib" ] ; then
 fi
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
 
-cd $OWD
-cd DAGMC
+cd $OWD/DAGMC
 mkdir bld
 cd bld
 cmake ../. -DMOAB_DIR=$OWD/moab/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
@@ -87,5 +76,5 @@ make install
 
 # Wrap up the results for downloading
 cd $OWD
-tar -pczf results.tar.gz moab hdf5 geant4 FLUKA/flutil/rfluka* DAGMC/FluDAG/bld DAGMC/Geant4/dagsolid/
+tar -pczf results.tar.gz moab hdf5 geant4 FLUKA/flutil/rfluka* DAGMC
 exit $?
