@@ -34,7 +34,7 @@ cd bld_moab
 cd ../moab
 autoreconf -fi
 cd ../bld_moab
-../moab/configure --enable-optimize --enable-shared --disable-debug --without-netcdf --with-hdf5=$OWD/hdf5 --prefix=$OWD/moab
+../moab/configure --enable-optimize --enable-shared --disable-debug --without-netcdf --enable-dagmc --with-hdf5=$OWD/hdf5 --prefix=$OWD/moab
 make
 make install 
 # add to the shared lib path
@@ -80,24 +80,10 @@ cd $OWD
 cd DAGMC
 mkdir bld
 cd bld
-cmake ../. -DMOAB_DIR=$OWD/moab/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4=$OWD/geant4 -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC/
-make
-make install
-
-export LD_LIBRARY_PATH=$LD_LIBRARYpATH:$owd/DAGMC/lib 
-# compile DagSolid
-cd $OWD
-mkdir -p $OWD/DAGMC/Geant4/dagsolid/bld
-cd $OWD/DAGMC/Geant4/dagsolid/bld
-# This step runs cmake on a new, higher level CMakeLists.txt.
-# Both the mainfludag and the tests will be built
-# subdirectories will be made in the build directory for src and tests
-cmake ../. -DMOAB_DIR=$OWD/moab -DGEANT_DIR=$OWD/geant4 -DDAGSOLID_DIR=$OWD/DAGMC/Geant4/dagsolid
+cmake ../. -DMOAB_DIR=$OWD/moab/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
 make 
 make install
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/DAGMC/Geant4/dagsolid/lib
  
-
 
 # Wrap up the results for downloading
 cd $OWD

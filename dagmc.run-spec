@@ -1,5 +1,5 @@
 run_type = test
-inputs   = scripts.scp, fetch/hdf5.url, fetch/geant4.url, fetch/dagmc.git, fetch/moab.git, fluka.scp, gen_test_list.py.scp
+inputs   = scripts.scp, fetch/hdf5.url, fetch/geant4.url, fetch/dagmc.git, fetch/andy.git, fluka.scp, gen_test_list.py.scp
 x86_64_Debian7_remote_pre_declare  = build.sh
 x86_64_Ubuntu12_remote_pre_declare = build.sh
 x86_64_Fedora19_remote_pre_declare = build.sh
