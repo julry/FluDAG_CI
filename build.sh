@@ -47,9 +47,10 @@ export FLUPRO=$OWD/FLUKA
 export FLUFOR=gfortran
 
 # Patch rfluka script so that it allows for longer filenames
-cd $OWD
-cp $FLUPRO/flutil/rfluka $FLUPRO/flutil/rfluka.orig
-patch $FLUPRO/flutil/rfluka $OWD/DAGMC/FluDAG/src/rfluka.patch 
+# cd $OWD
+# cp $FLUPRO/flutil/rfluka $FLUPRO/flutil/rfluka.orig
+# Note: change the path to the patch
+# patch $FLUPRO/flutil/rfluka $OWD/DAGMC/FluDAG/src/rfluka.patch 
 
 # compile geant4
 cd $OWD
