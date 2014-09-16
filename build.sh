@@ -24,16 +24,14 @@ make install
 export LD_LIBRARY_PATH=$OWD/hdf5/lib
 # dont need these, but may prove useful in future
 export PATH=$PATH:$OWD/hdf5/bin
-cd ..
 
 # Build moab with no CGM 
-mkdir $OWD/bld_moab
-cd bld_moab
-# make moab install dir
-# already made by git
-cd ../moab
+cd $OWD
+# moab install_dir already made by git
+cd moab
 autoreconf -fi
-cd ../bld_moab
+mkdir -p $OWD/bld_moab
+cd $OWD/bld_moab
 ../moab/configure --enable-optimize --enable-shared --disable-debug --without-netcdf --enable-dagmc --with-hdf5=$OWD/hdf5 --prefix=$OWD/moab
 make
 make install 
@@ -56,7 +54,7 @@ export FLUFOR=gfortran
 cd $OWD
 mkdir -p $OWD/geant4/bld
 cd $OWD/geant4/bld
-cmake ../../geant4.10.00.p01/. -DCMAKE_INSTALL_PREFIX=$OWD/geant4
+cmake ../../geant4.10.00.p02/. -DCMAKE_INSTALL_PREFIX=$OWD/geant4
 make
 make install
 
@@ -67,6 +65,7 @@ if [ ! -d "$OWD/geant4/lib" ] ; then
 fi
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
 
+# Mke everything in DAGMC
 cd $OWD/DAGMC
 mkdir bld
 cd bld
@@ -74,7 +73,6 @@ cmake ../. -DMOAB_DIR=$OWD/moab/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD
 make 
 make install
  
-
 # Wrap up the results for downloading
 cd $OWD
 tar -pczf results.tar.gz moab hdf5 geant4 FLUKA/flutil/rfluka* DAGMC
