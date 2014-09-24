@@ -45,13 +45,11 @@ export FLUPRO=$OWD/FLUKA
 export FLUFOR=gfortran
 
 # Patch rfluka script so that it allows for longer filenames
-# cd $OWD
-# cp $FLUPRO/flutil/rfluka $FLUPRO/flutil/rfluka.orig
-# Note: change the path to the patch
-# patch $FLUPRO/flutil/rfluka $OWD/DAGMC/FluDAG/src/rfluka.patch 
-
-# compile geant4
 cd $OWD
+cp $FLUPRO/flutil/rfluka $FLUPRO/flutil/rfluka.orig
+patch $FLUPRO/flutil/rfluka $OWD/DAGMC/fluka/rfluka.patch 
+
+# compile geant4 -- Takes a lot of time!
 mkdir -p $OWD/geant4/bld
 cd $OWD/geant4/bld
 cmake ../../geant4.10.00.p02/. -DCMAKE_INSTALL_PREFIX=$OWD/geant4
@@ -66,10 +64,11 @@ fi
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
 
 # Mke everything in DAGMC
-cd $OWD/DAGMC
+cd $OWD
+cd DAGMC
 mkdir bld
 cd bld
-cmake ../. -DMOAB_DIR=$OWD/moab/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
+cmake ../. -DMOAB_DIR=$OWD/moab/lib -DHDF5_HOME=$OWD/hdf5 -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
 make 
 make install
  
