@@ -13,6 +13,19 @@ OWD=`pwd`
 
  
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Build lapack for Debian linux
+export LAPACK='lapack-3.5.0'
+cd $OWD/${LAPACK}
+# wget http://www.netlib.org/lapack-dev/lapack--3.0--patch--10042002.tgz
+# tar zxvf lapack--3.0--patch--10042002.tgz
+mv INSTALL/make.inc.LINUX make.inc
+make install blaslib lib
+mv lapack_LINUX.a liblapack.a
+mv blas_LINUX.a librefblas.a
+cd ..
+export LD_LIBRARY_PATH=$OWD/${LAPACK}/lib:$LD_LIBRARY_PATH
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 chmod +x Miniconda-3.0.5-Linux-x86_64.sh
 ./Miniconda-3.0.5-Linux-x86_64.sh -b -p `pwd`/anaconda
 
@@ -83,5 +96,5 @@ make install
  
 # Wrap up the results for downloading
 cd $OWD
-tar -pczf results.tar.gz anaconda geant4 FLUKA/flutil/rfluka* DAGMC 
+tar -pczf results.tar.gz anaconda geant4 FLUKA/flutil/rfluka* DAGMC ${LAPACK}
 exit $?
