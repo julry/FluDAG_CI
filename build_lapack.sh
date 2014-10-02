@@ -10,7 +10,6 @@ set -x
 set -e
 # original working directory
 OWD=`pwd`
-
  
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Build lapack for Debian linux
@@ -18,29 +17,33 @@ export LAPACK='lapack-3.5.0'
 cd $OWD/${LAPACK}
 # wget http://www.netlib.org/lapack-dev/lapack--3.0--patch--10042002.tgz
 # tar zxvf lapack--3.0--patch--10042002.tgz
-mv INSTALL/make.inc.LINUX make.inc
-make install blaslib lib
-mv lapack_LINUX.a liblapack.a
-mv blas_LINUX.a librefblas.a
+cp INSTALL/make.inc.gfortran make.inc
+make lib
+# cp librefblas.a libblas.a
+# make blaslib
+# make lapacklib
 cd ..
-export LD_LIBRARY_PATH=$OWD/${LAPACK}/lib:$LD_LIBRARY_PATH
+# LD_LIBRARY_PATH is not defined yet
+export LD_LIBRARY_PATH=$OWD/${LAPACK}
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 chmod +x Miniconda-3.0.5-Linux-x86_64.sh
-./Miniconda-3.0.5-Linux-x86_64.sh -b -p `pwd`/anaconda
+./Miniconda-3.0.5-Linux-x86_64.sh -b -p $OWD/anaconda
 
-export LD_LIBRARY_PATH=`pwd`/anaconda/lib:$LD_LIBRARY_PATH
-export C_INCLUDE_PATH=`pwd`/anaconda/include:$C_INCLUDE_PATH
-export CPLUS_INCLUDE_PATH=`pwd`/anaconda/include:$CPLUS_INCLUDE_PATH
-export LIBRARY_PATH=`pwd`/anaconda/lib:$LIBRARY_PATH
-export HDF5_ROOT=`pwd`/anaconda
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/anaconda/lib
+export C_INCLUDE_PATH=$OWD/anaconda/include:$C_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH=$OWD/anaconda/include:$CPLUS_INCLUDE_PATH
+export LIBRARY_PATH=$LD_LIBRARY_PATH
+export HDF5_ROOT=$OWD/anaconda
+env
 
-cdir=`pwd`/anaconda
+# cdir=`pwd`/anaconda
 export PATH=`pwd`/anaconda/bin:`pwd`/anaconda/usr/local/bin:$PATH
 conda install conda-build jinja2 nose setuptools pytables hdf5 scipy cython cmake numpy
-# Don't do if not linux
+# Only Linux needs this 
 conda install patchelf
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # modified dagmcci
 cd moab
 autoreconf -fi
@@ -48,21 +51,23 @@ autoreconf -fi
 make
 make install 
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # make PyTAPs
-cd ..
-cd PyTAPS-1.4
-python setup.py --iMesh-path=$OWD/anaconda install --prefix=$OWD/anaconda 
+# cd ..
+# cd PyTAPS-1.4
+# python setup.py --iMesh-path=$OWD/anaconda install --prefix=$OWD/anaconda 
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # make PyNE
 cd ..
 cd pyne
 python setup.py install --prefix=$OWD/anaconda --hdf5=$OWD/anaconda -- -DMOAB_INCLUDE_DIR=$OWD/anaconda/include -DMOAB_LIBRARY=$OWD/anaconda/lib
-cd scripts
-env
-nuc_data_make
+# cd scripts
+# env
+# nuc_data_make
 
 # With the conda build, all libraries are in anaconda/lib
-export LD_LIBRARY_PATH=$OWD/anaconda/lib
+# export LD_LIBRARY_PATH=$OWD/anaconda/lib
 
 # Do not need to make the libflukahp.a library, but do need the environment vars
 export FLUPRO=$OWD/FLUKA
