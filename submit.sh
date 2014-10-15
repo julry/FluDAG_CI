@@ -23,5 +23,10 @@ echo \
 scp_file  = $path/gen_test_list.py
 recursive = true
 ">$path/gen_test_list.py.scp
+ 
+echo \
+"method   = scp
+scp_file  = $path/lapack_makefiles/*
+">$path/lapack.make.scp
 
 nmi_submit $1

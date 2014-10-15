@@ -1,5 +1,0 @@
-These submit files cause gcc 4.8.2 to be built on the Scientific Linux "SL6"
-platform and the gcc files to be saved in a results tar.
-
-The submit files in this directory are taken from an example by Aaron Moate on 
-the BaTLab team.  

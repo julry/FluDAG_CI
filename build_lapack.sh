@@ -12,16 +12,24 @@ set -e
 OWD=`pwd`
  
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# In order to compile lapack we need libf2c.so
+tar zxvf libf2c.tgz
+export F2C='libf2c'
+
 # Build lapack for Debian linux
 export LAPACK='lapack-3.5.0'
 cd $OWD/${LAPACK}
 # wget http://www.netlib.org/lapack-dev/lapack--3.0--patch--10042002.tgz
 # tar zxvf lapack--3.0--patch--10042002.tgz
-cp INSTALL/make.inc.gfortran make.inc
-make lib
-# cp librefblas.a libblas.a
-# make blaslib
-# make lapacklib
+# Copy a version of cmake that adds -fPIC to CFLAGS
+cp $OWD/make.inc .
+cp $OWD/Makefile.lapack-3.5.0.SRC SRC/Makefile
+cp $OWD/Makefile.lapack-3.5.0.BLAS.SRC BLAS/SRC/Makefile
+LAPACK_LIB=$OWD/${LAPACK}
+echo $LAPACKLIB
+# make blaslib LAPACK_LIBDIR=$LAPACKLIB
+# make lapacklib LAPACK_LIBDIR=$LAPACKLIB
+ls 
 cd ..
 # LD_LIBRARY_PATH is not defined yet
 export LD_LIBRARY_PATH=$OWD/${LAPACK}
@@ -34,13 +42,15 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/anaconda/lib
 export C_INCLUDE_PATH=$OWD/anaconda/include:$C_INCLUDE_PATH
 export CPLUS_INCLUDE_PATH=$OWD/anaconda/include:$CPLUS_INCLUDE_PATH
 export LIBRARY_PATH=$LD_LIBRARY_PATH
+# export RUNPATH = $LD_LIBRARY_PATH
+export LD_RUN_PATH=$LD_LIBRARY_PATH
 export HDF5_ROOT=$OWD/anaconda
 env
 
 # cdir=`pwd`/anaconda
 export PATH=`pwd`/anaconda/bin:`pwd`/anaconda/usr/local/bin:$PATH
 conda install conda-build jinja2 nose setuptools pytables hdf5 scipy cython cmake numpy
-# Only Linux needs this 
+
 conda install patchelf
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,12 +69,11 @@ make install
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # make PyNE
-cd ..
-cd pyne
-python setup.py install --prefix=$OWD/anaconda --hdf5=$OWD/anaconda -- -DMOAB_INCLUDE_DIR=$OWD/anaconda/include -DMOAB_LIBRARY=$OWD/anaconda/lib
-# cd scripts
-# env
-# nuc_data_make
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# cd ..
+# cd pyne
+# python setup.py install --prefix=$OWD/anaconda --hdf5=$OWD/anaconda -- -DMOAB_INCLUDE_DIR=$OWD/anaconda/include -DMOAB_LIBRARY=$OWD/anaconda/lib
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # With the conda build, all libraries are in anaconda/lib
 # export LD_LIBRARY_PATH=$OWD/anaconda/lib
@@ -95,9 +104,9 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
 # Make everything in DAGMC
 mkdir -p $OWD/DAGMC/bld
 cd $OWD/DAGMC/bld
-cmake ../. -DMOAB_DIR=$OWD/anaconda/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
-make 
-make install
+# cmake ../. -DMOAB_DIR=$OWD/anaconda/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
+# make 
+# make install
  
 # Wrap up the results for downloading
 cd $OWD
