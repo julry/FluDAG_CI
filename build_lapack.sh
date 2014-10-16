@@ -63,9 +63,9 @@ make install
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # make PyTAPs
-# cd ..
-# cd PyTAPS-1.4
-# python setup.py --iMesh-path=$OWD/anaconda install --prefix=$OWD/anaconda 
+cd ..
+cd PyTAPS-1.4
+python setup.py --iMesh-path=$OWD/anaconda install --prefix=$OWD/anaconda 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # make PyNE
