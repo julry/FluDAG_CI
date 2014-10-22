@@ -12,26 +12,40 @@ set -e
 OWD=`pwd`
  
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# In order to compile lapack we need libf2c.so
-tar zxvf libf2c.tgz
+# Build lapack and its dependencies for Debian linux
+export LAPACK='lapack-3.5.0'
 export F2C='libf2c'
+tar zxvf libf2c.tgz
+cp $OWD/Makefile.libf2c $OWD/${F2C}/Makefile
+cd $OWD/${F2C}
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Make f2c.h
+make hadd
+# Make static lib
+make
+# need dynamic lib for lapack dynamic libs
+make libf2c.so
+cd $OWD/${LAPACK}
+export LD_RUN_PATH=$OWD/${F2C}:$OWD/${LAPACK}
+export LIBRARY_PATH=$OWD/${F2C}:$OWD/${LAPACK}
+export LD_LIBRARY_PATH=$OWD/${F2C}:$OWD/${LAPACK}
+env
 
 # Build lapack for Debian linux
-export LAPACK='lapack-3.5.0'
-cd $OWD/${LAPACK}
 # wget http://www.netlib.org/lapack-dev/lapack--3.0--patch--10042002.tgz
 # tar zxvf lapack--3.0--patch--10042002.tgz
 # Copy a version of cmake that adds -fPIC to CFLAGS
 cp $OWD/make.inc .
+cp ./SRC/Makefile ./SRC/Makefile.orig
+cp ./BLAS/SRC/Makefile ./BLAS/SRC/Makefile.orig
 cp $OWD/Makefile.lapack-3.5.0.SRC SRC/Makefile
 cp $OWD/Makefile.lapack-3.5.0.BLAS.SRC BLAS/SRC/Makefile
+
 LAPACK_LIB=$OWD/${LAPACK}
-echo $LAPACKLIB
-# make blaslib LAPACK_LIBDIR=$LAPACKLIB
-# make lapacklib LAPACK_LIBDIR=$LAPACKLIB
-ls 
-cd ..
-# LD_LIBRARY_PATH is not defined yet
+make blaslib LAPACK_LIBDIR=$LAPACK_LIB
+make lapacklib LAPACK_LIBDIR=$LAPACK_LIB
+
+cd $OWD
 export LD_LIBRARY_PATH=$OWD/${LAPACK}
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -42,7 +56,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/anaconda/lib
 export C_INCLUDE_PATH=$OWD/anaconda/include:$C_INCLUDE_PATH
 export CPLUS_INCLUDE_PATH=$OWD/anaconda/include:$CPLUS_INCLUDE_PATH
 export LIBRARY_PATH=$LD_LIBRARY_PATH
-# export RUNPATH = $LD_LIBRARY_PATH
+export RUNPATH=$LD_LIBRARY_PATH
 export LD_RUN_PATH=$LD_LIBRARY_PATH
 export HDF5_ROOT=$OWD/anaconda
 env
@@ -50,7 +64,6 @@ env
 # cdir=`pwd`/anaconda
 export PATH=`pwd`/anaconda/bin:`pwd`/anaconda/usr/local/bin:$PATH
 conda install conda-build jinja2 nose setuptools pytables hdf5 scipy cython cmake numpy
-
 conda install patchelf
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,9 +83,9 @@ python setup.py --iMesh-path=$OWD/anaconda install --prefix=$OWD/anaconda
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # make PyNE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# cd ..
-# cd pyne
-# python setup.py install --prefix=$OWD/anaconda --hdf5=$OWD/anaconda -- -DMOAB_INCLUDE_DIR=$OWD/anaconda/include -DMOAB_LIBRARY=$OWD/anaconda/lib
+cd ..
+cd pyne
+python setup.py install --prefix=$OWD/anaconda --hdf5=$OWD/anaconda -- -DMOAB_INCLUDE_DIR=$OWD/anaconda/include -DMOAB_LIBRARY=$OWD/anaconda/lib
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # With the conda build, all libraries are in anaconda/lib
@@ -96,10 +109,10 @@ make install
 
 # on redhat systems geant installs to a lib64 rather than lib
 # copy rather than link to avoid downstream linking issues
-if [ ! -d "$OWD/geant4/lib" ] ; then
-    cp -r $OWD/geant4/lib64 $OWD/geant4/lib 
-fi
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
+#if [ ! -d "$OWD/geant4/lib" ] ; then
+#   cp -r $OWD/geant4/lib64 $OWD/geant4/lib 
+#fi
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
 
 # Make everything in DAGMC
 mkdir -p $OWD/DAGMC/bld
@@ -110,5 +123,5 @@ cd $OWD/DAGMC/bld
  
 # Wrap up the results for downloading
 cd $OWD
-tar -pczf results.tar.gz anaconda geant4 FLUKA/flutil/rfluka* DAGMC ${LAPACK}
+tar -pczf results.tar.gz anaconda geant4 FLUKA/flutil/rfluka* DAGMC ${LAPACK} ${F2C}
 exit $?

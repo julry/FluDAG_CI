@@ -1,5 +1,5 @@
 run_type = test
-inputs   = scripts.scp, fetch/geant4.url, fetch/fludag_tally.git, fetch/andy.git, fetch/dagmc-ci.git, fluka.scp, gen_test_list.py.scp, fetch/pyne.git, fetch/miniconda_linux.url, fetch/pytaps.url, fetch/lapack.url, lapack.make.scp 
+inputs   = scripts.scp, fetch/geant4.url, fetch/fludag_tally.git, fetch/andy.git, fetch/dagmc-ci.git, fluka.scp, gen_test_list.py.scp, fetch/pyne.git, fetch/miniconda_linux.url, fetch/pytaps.url, fetch/lapack.url, fetch/f2c.url, lapack.scp
 x86_64_Debian7_remote_pre_declare  = build_lapack.sh
 remote_declare = generate_test_list.sh
 remote_task    = run-test.sh
