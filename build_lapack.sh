@@ -17,6 +17,8 @@ export LAPACK='lapack-3.5.0'
 export F2C='libf2c'
 tar zxvf libf2c.tgz
 cp $OWD/Makefile.libf2c $OWD/${F2C}/Makefile
+cp $OWD/${F2C}/main.c $OWD/${F2C}/main.c.orig
+cp $OWD/f2c.main.c $OWD/${F2C}/main.c
 cd $OWD/${F2C}
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Make f2c.h
@@ -35,7 +37,7 @@ env
 # wget http://www.netlib.org/lapack-dev/lapack--3.0--patch--10042002.tgz
 # tar zxvf lapack--3.0--patch--10042002.tgz
 # Copy a version of cmake that adds -fPIC to CFLAGS
-cp $OWD/make.inc .
+cp $OWD/lapack.make.inc make.inc
 cp ./SRC/Makefile ./SRC/Makefile.orig
 cp ./BLAS/SRC/Makefile ./BLAS/SRC/Makefile.orig
 cp $OWD/Makefile.lapack-3.5.0.SRC SRC/Makefile
@@ -109,17 +111,17 @@ make install
 
 # on redhat systems geant installs to a lib64 rather than lib
 # copy rather than link to avoid downstream linking issues
-#if [ ! -d "$OWD/geant4/lib" ] ; then
-#   cp -r $OWD/geant4/lib64 $OWD/geant4/lib 
-#fi
-# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
+if [ ! -d "$OWD/geant4/lib" ] ; then
+   cp -r $OWD/geant4/lib64 $OWD/geant4/lib 
+fi
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
 
 # Make everything in DAGMC
 mkdir -p $OWD/DAGMC/bld
 cd $OWD/DAGMC/bld
-# cmake ../. -DMOAB_DIR=$OWD/anaconda/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
-# make 
-# make install
+cmake ../. -DMOAB_DIR=$OWD/anaconda/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
+make 
+make install
  
 # Wrap up the results for downloading
 cd $OWD

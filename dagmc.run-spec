@@ -1,5 +1,5 @@
 run_type = test
-inputs   = scripts.scp, fetch/geant4.url, fetch/fludag_tally.git, fetch/andy.git, fetch/dagmc-ci.git, fluka.scp, gen_test_list.py.scp, fetch/pyne.git, fetch/miniconda_linux.url, fetch/pytaps.url, fetch/lapack.url, fetch/f2c.url, lapack.scp
+inputs   = scripts.scp, fetch/geant4.url, fetch/fludag_tally.git, fetch/moab.git, fetch/dagmc-ci.git, fluka.scp, gen_test_list.py.scp, fetch/pyne.git, fetch/miniconda_linux.url, fetch/pytaps.url, fetch/lapack.url, fetch/f2c.url, lapack.scp
 x86_64_Debian7_remote_pre_declare  = build_lapack.sh
 x86_64_Ubuntu12_remote_pre_declare = build.sh
 x86_64_Fedora19_remote_pre_declare = build.sh
@@ -7,6 +7,6 @@ x86_64_Fedora20_remote_pre_declare = build.sh
 remote_declare = generate_test_list.sh
 remote_task    = run-test.sh
 platforms      = x86_64_Debian7, x86_64_Ubuntu12, x86_64_Fedora19, x86_64_Fedora20
-project        = Includes Debian Lapack Build
-description    = Known good 64-bit platforms
+project        = UWUW, moab master
+description    = 64-bit platforms, incl. Debian lapack, f2c
 notify         = dagmcci@googlegroups.com
