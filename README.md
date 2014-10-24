@@ -14,8 +14,12 @@ The pull-generated build-and-test ensures that developers do not check in code t
 deleterious side effects.  These tests are auto-generated and designed to runfrom the 
 dagmcci@submit-1.batlab.org login.
 
-> ./submit dagmc.run-spec
+> ./submit.sh dagmc.run-spec
  
+Note that the submit script does a wget for the f2c source code, unzips it and then tars it
+up before proceeding.  This is because the platform that needs the f2c code does not have 
+and unzip command installed.
+
 2.  Nightly build-and-test
 
 Nightly builds are setup manually and launched from an individual batlab account.
@@ -25,7 +29,7 @@ The nightly build-and-test ensures that software dependencies and third party up
 have not broken FluDAG.
 
 It is launched from the cloned DAGMC-CI repository with
-> ./submit_nightly.sh dagmc_nightly.run-spec
+> ./submit.sh dagmc_nightly.run-spec
 
 GIT Repository
 _______________
