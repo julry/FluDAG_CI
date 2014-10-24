@@ -1,6 +1,0 @@
-project     = DAGMC-CI_GCC482_SL6
-description = Includes prereqs, gmp fix 
-run_type = build
-platforms = x86_SL5
-remote_task = build_gcc482.sh
-inputs = build_gcc482.sh.scp, gcc-4.8.2.tar.bz2.scp

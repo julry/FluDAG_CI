@@ -14,8 +14,12 @@ The pull-generated build-and-test ensures that developers do not check in code t
 deleterious side effects.  These tests are auto-generated and designed to runfrom the 
 dagmcci@submit-1.batlab.org login.
 
-> ./submit fludag.run-spec
+> ./submit.sh dagmc.run-spec
  
+Note that the submit script does a wget for the f2c source code, unzips it and then tars it
+up before proceeding.  This is because the platform that needs the f2c code does not have 
+and unzip command installed.
+
 2.  Nightly build-and-test
 
 Nightly builds are setup manually and launched from an individual batlab account.
@@ -25,7 +29,7 @@ The nightly build-and-test ensures that software dependencies and third party up
 have not broken FluDAG.
 
 It is launched from the cloned DAGMC-CI repository with
-> ./submit_nightly.sh fludag_nightly.run-spec
+> ./submit.sh dagmc_nightly.run-spec
 
 GIT Repository
 _______________
@@ -37,12 +41,13 @@ Instead, this repository should be cloned via ssh (after adding your public ssh 
 
 Submitting a job
 ________________
-DAGMC-CI is intended to be run by a software robot, 'Polyphemer', on the dagmcci login of 
-submit-1.batlab.org.  The scripts are pulled from the repository and placed in a directory 
-with a newly constructed name.  As such, the file copying must not reference a particular 
-directory structure under $HOME.  Since the *.scp scripts must reference 
-the repository subdirectory under $HOME, they will not work as intended in a $HOME substructure 
-that differs from the repo.  The submit.sh script is a simple workaround to this problem.  
+The Pull-Request build managed by DAGMC-CI is intended to be run by a software robot, 
+'Polyphemer', on the dagmcci login of submit-1.batlab.org.  The scripts are pulled from 
+the repository and placed in a directory with a locally constructed name.  As such, 
+the file copying must not reference a particular directory structure under $HOME.  
+Since the *.scp scripts must reference the repository subdirectory under $HOME, they will 
+not work as intended in a $HOME substructure that differs from the repo.  The submit.sh 
+script is a simple workaround to this problem.  
 
 On the run node, the submit.sh script pulls the name of the directory from the run node side 
 and uses it to write out the .scp files on the fly so the current path appended to the front 
@@ -51,11 +56,11 @@ will be correct with respect to the name constructed by Polyphemer.
 If you are testing scripts and want to run from your own private batlab login, the job should 
 be submitted by typing:
 
-$ ./submit.sh fludag.run-spec    // RIGHT
+$ ./submit.sh dagmc.run-spec    // RIGHT
 
 and not 
 
-$ ./nmi_submit fludag.run-spec   // WRONG
+$ ./nmi_submit dagmc.run-spec   // WRONG
 
 Initiating a job
 ________________

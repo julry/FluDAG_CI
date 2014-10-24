@@ -1,0 +1,3 @@
+method = url
+url = http://www.netlib.org/lapack/lapack.tgz
+untar = true

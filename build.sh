@@ -8,39 +8,44 @@
 #
 set -x
 set -e
-
 # original working directory
 OWD=`pwd`
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+chmod +x Miniconda-3.0.5-Linux-x86_64.sh
+./Miniconda-3.0.5-Linux-x86_64.sh -b -p `pwd`/anaconda
 
-# Out of source build for hdf5.  
-mkdir $OWD/bld_hdf5
-cd bld_hdf5
-# create install dir
-mkdir $OWD/hdf5
-../hdf5-1.8.11/configure --enable-shared --prefix=$OWD/hdf5
-make
-make install
-# set the shared lib path
-export LD_LIBRARY_PATH=$OWD/hdf5/lib
-# dont need these, but may prove useful in future
-export PATH=$PATH:$OWD/hdf5/bin
-cd ..
+export LD_LIBRARY_PATH=`pwd`/anaconda/lib
+export C_INCLUDE_PATH=`pwd`/anaconda/include:$C_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH=`pwd`/anaconda/include:$CPLUS_INCLUDE_PATH
+export LIBRARY_PATH=`pwd`/anaconda/lib:$LIBRARY_PATH
+export HDF5_ROOT=`pwd`/anaconda
 
-# Build moab with no CGM 
-mkdir $OWD/bld_moab
-cd bld_moab
-# make moab install dir
-# already made by git
-cd ../moab
+cdir=`pwd`/anaconda
+export PATH=`pwd`/anaconda/bin:`pwd`/anaconda/usr/local/bin:$PATH
+conda install conda-build jinja2 nose setuptools pytables hdf5 scipy cython cmake numpy
+# Don't do if not linux
+conda install patchelf
+
+# modified dagmcci
+cd moab
 autoreconf -fi
-cd ../bld_moab
-../moab/configure --enable-optimize --enable-shared --disable-debug --without-netcdf --with-hdf5=$OWD/hdf5 --prefix=$OWD/moab
+./configure --prefix=$OWD/anaconda --enable-optimize --enable-shared --disable-debug --without-netcdf --enable-dagmc --with-hdf5=$OWD/anaconda
 make
 make install 
-# add to the shared lib path
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/moab/lib
-# dont need them but may be useful
-export PATH=$PATH:$OWD/moab/bin
+
+# make PyTAPs
+# cd ..
+# cd PyTAPS-1.4
+#python setup.py --iMesh-path=$OWD/anaconda install --prefix=$OWD/anaconda 
+
+# make PyNE
+cd ..
+cd pyne
+python setup.py install --prefix=$OWD/anaconda --hdf5=$OWD/anaconda -- -DMOAB_INCLUDE_DIR=$OWD/anaconda/include -DMOAB_LIBRARY=$OWD/anaconda/lib
+env
+
+# With the conda build, all libraries are in anaconda/lib
+# export LD_LIBRARY_PATH=$OWD/anaconda/lib
 
 # Do not need to make the libflukahp.a library, but do need the environment vars
 export FLUPRO=$OWD/FLUKA
@@ -49,24 +54,13 @@ export FLUFOR=gfortran
 # Patch rfluka script so that it allows for longer filenames
 cd $OWD
 cp $FLUPRO/flutil/rfluka $FLUPRO/flutil/rfluka.orig
-patch $FLUPRO/flutil/rfluka $OWD/DAGMC/FluDAG/src/rfluka.patch 
+patch $FLUPRO/flutil/rfluka $OWD/DAGMC/fluka/rfluka.patch 
 
-# Compile the fludag source and link it to the fludag and dagmc libraries
-cd $OWD
-mkdir -p $OWD/DAGMC/FluDAG/bld
-cd $OWD/DAGMC/FluDAG/bld 
-# This step runs cmake on a new, higher level CMakeLists.txt.
-# Both the mainfludag and the tests will be built
-# subdirectories will be made in the build directory for src and tests
-cmake -DMOAB_HOME=$OWD/moab ..
-make 
-
-# compile geant4
-cd $OWD
+# compile geant4 -- Takes a lot of time!
 mkdir -p $OWD/geant4/bld
 cd $OWD/geant4/bld
-cmake ../../geant4.10.00.p01/. -DCMAKE_INSTALL_PREFIX=$OWD/geant4
-make
+cmake ../../geant4.10.00.p02/. -DCMAKE_INSTALL_PREFIX=$OWD/geant4
+make -j 16
 make install
 
 # on redhat systems geant installs to a lib64 rather than lib
@@ -76,22 +70,14 @@ if [ ! -d "$OWD/geant4/lib" ] ; then
 fi
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
 
-
-# compile DagSolid
-cd $OWD
-mkdir -p $OWD/DAGMC/Geant4/dagsolid/bld
-cd $OWD/DAGMC/Geant4/dagsolid/bld
-# This step runs cmake on a new, higher level CMakeLists.txt.
-# Both the mainfludag and the tests will be built
-# subdirectories will be made in the build directory for src and tests
-cmake ../. -DMOAB_DIR=$OWD/moab -DGEANT_DIR=$OWD/geant4 -DDAGSOLID_DIR=$OWD/DAGMC/Geant4/dagsolid
+# Make everything in DAGMC
+mkdir -p $OWD/DAGMC/bld
+cd $OWD/DAGMC/bld
+cmake ../. -DMOAB_DIR=$OWD/anaconda/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
 make 
 make install
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/DAGMC/Geant4/dagsolid/lib
  
-
-
 # Wrap up the results for downloading
 cd $OWD
-tar -pczf results.tar.gz moab hdf5 geant4 FLUKA/flutil/rfluka* DAGMC/FluDAG/bld DAGMC/Geant4/dagsolid/
+tar -pczf results.tar.gz anaconda geant4 FLUKA/flutil/rfluka* DAGMC 
 exit $?
