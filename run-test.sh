@@ -1,4 +1,5 @@
-set -e
+# Causes exits on error 
+# set -e
 set -x
 
 OWD=`pwd`
