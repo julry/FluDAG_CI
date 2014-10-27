@@ -1,4 +1,4 @@
-# set -e
+set -e
 set -x
 
 OWD=`pwd`

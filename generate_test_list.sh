@@ -23,8 +23,8 @@ DAGMC/tests/test_KDEKernel --gtest_list_tests | python gen_test_list.py KDEKerne
 DAGMC/tests/test_KDENeighborhood --gtest_list_tests | python gen_test_list.py KDENeighborhood.
 DAGMC/tests/test_KDENeighborhood --gtest_list_tests | python gen_test_list.py KDENeighborhood. >> tasklist.nmi
 
-DAGMC/tests/test_PolynomialKernal --gtest_list_tests | python gen_test_list.py PolynomialKernal.
-DAGMC/tests/test_PolynomialKernal --gtest_list_tests | python gen_test_list.py PolynomialKernal. >> tasklist.nmi
+DAGMC/tests/test_PolynomialKernel --gtest_list_tests | python gen_test_list.py PolynomialKernel.
+DAGMC/tests/test_PolynomialKernel --gtest_list_tests | python gen_test_list.py PolynomialKernel. >> tasklist.nmi
 
 DAGMC/tests/test_Quadrature --gtest_list_tests | python gen_test_list.py Quadrature.
 DAGMC/tests/test_Quadrature --gtest_list_tests | python gen_test_list.py Quadrature. >> tasklist.nmi
