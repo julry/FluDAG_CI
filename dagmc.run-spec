@@ -8,5 +8,5 @@ remote_declare = generate_test_list.sh
 remote_task    = run-test.sh
 platforms      = x86_64_Debian7, x86_64_Ubuntu12, x86_64_Fedora19, x86_64_Fedora20
 project        = UWUW
-description    = look at dagtally.so
+description    = DAGMC On-Demand Linux Build/Test
 notify         = dagmcci@googlegroups.com
