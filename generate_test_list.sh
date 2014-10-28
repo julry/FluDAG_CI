@@ -14,9 +14,6 @@ DAGMC/tests/uwuw_unit_tests --gtest_list_tests | python gen_test_list.py UWUW.
 DAGMC/tests/uwuw_unit_tests --gtest_list_tests | python gen_test_list.py UWUW. >> tasklist.nmi
 
 # Add Tally unit tests
-DAGMC/tests/test_CellTally --gtest_list_tests | python gen_test_list.py CellTally.
-DAGMC/tests/test_CellTally --gtest_list_tests | python gen_test_list.py CellTally. >> tasklist.nmi
-
 DAGMC/tests/test_KDEKernel --gtest_list_tests | python gen_test_list.py KDEKernel.
 DAGMC/tests/test_KDEKernel --gtest_list_tests | python gen_test_list.py KDEKernel. >> tasklist.nmi
 
