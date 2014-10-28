@@ -1,10 +1,7 @@
 #!/bin/sh
-# build.sh
+# build_lapack.sh
 #
-# We don't proceed unless the preceding step succeeded, and
-# we return the success or failure of the sequence.
-#
-# This version builds a moab stack with no cgm
+# Build lapack and dependencies for the Debian platform
 #
 set -x
 set -e
@@ -16,6 +13,7 @@ OWD=`pwd`
 export LAPACK='lapack-3.5.0'
 export F2C='libf2c'
 tar zxvf libf2c.tgz
+# Pre-modified files for dynamic lib
 cp $OWD/Makefile.libf2c $OWD/${F2C}/Makefile
 cp $OWD/${F2C}/main.c $OWD/${F2C}/main.c.orig
 cp $OWD/f2c.main.c $OWD/${F2C}/main.c
@@ -77,10 +75,10 @@ make
 make install 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# make PyTAPs
-cd ..
-cd PyTAPS-1.4
-python setup.py --iMesh-path=$OWD/anaconda install --prefix=$OWD/anaconda 
+# make PyTAPs - not needed for testing
+# cd ..
+# cd PyTAPS-1.4
+# python setup.py --iMesh-path=$OWD/anaconda install --prefix=$OWD/anaconda 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # make PyNE
@@ -102,7 +100,7 @@ cd $OWD
 cp $FLUPRO/flutil/rfluka $FLUPRO/flutil/rfluka.orig
 patch $FLUPRO/flutil/rfluka $OWD/DAGMC/fluka/rfluka.patch 
 
-# compile geant4 -- Takes a lot of time!
+# compile geant4 -- Takes a lot of time, use more cores
 mkdir -p $OWD/geant4/bld
 cd $OWD/geant4/bld
 cmake ../../geant4.10.00.p02/. -DCMAKE_INSTALL_PREFIX=$OWD/geant4
@@ -119,7 +117,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
 # Make everything in DAGMC
 mkdir -p $OWD/DAGMC/bld
 cd $OWD/DAGMC/bld
-cmake ../. -DMOAB_DIR=$OWD/anaconda/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
+cmake ../. -DMOAB_DIR=$OWD/anaconda/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DBUILD_TALLY=ON -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
 make 
 make install
  

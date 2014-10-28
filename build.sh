@@ -56,7 +56,7 @@ cd $OWD
 cp $FLUPRO/flutil/rfluka $FLUPRO/flutil/rfluka.orig
 patch $FLUPRO/flutil/rfluka $OWD/DAGMC/fluka/rfluka.patch 
 
-# compile geant4 -- Takes a lot of time!
+# compile geant4 -- Takes a lot of time, use more cores
 mkdir -p $OWD/geant4/bld
 cd $OWD/geant4/bld
 cmake ../../geant4.10.00.p02/. -DCMAKE_INSTALL_PREFIX=$OWD/geant4
@@ -66,14 +66,14 @@ make install
 # on redhat systems geant installs to a lib64 rather than lib
 # copy rather than link to avoid downstream linking issues
 if [ ! -d "$OWD/geant4/lib" ] ; then
-    cp -r $OWD/geant4/lib64 $OWD/geant4/lib 
+   cp -r $OWD/geant4/lib64 $OWD/geant4/lib 
 fi
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
 
 # Make everything in DAGMC
 mkdir -p $OWD/DAGMC/bld
 cd $OWD/DAGMC/bld
-cmake ../. -DMOAB_DIR=$OWD/anaconda/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
+cmake ../. -DMOAB_DIR=$OWD/anaconda/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DBUILD_TALLY=ON -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
 make 
 make install
  
