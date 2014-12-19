@@ -11,8 +11,8 @@ set -e
 # original working directory
 OWD=`pwd`
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-chmod +x Miniconda-3.0.5-Linux-x86_64.sh
-./Miniconda-3.0.5-Linux-x86_64.sh -b -p `pwd`/anaconda
+chmod +x Miniconda-3.7.0-Linux-x86_64.sh
+./Miniconda-3.7.0-Linux-x86_64.sh -b -p `pwd`/anaconda
 
 export LD_LIBRARY_PATH=`pwd`/anaconda/lib
 export C_INCLUDE_PATH=`pwd`/anaconda/include:$C_INCLUDE_PATH
