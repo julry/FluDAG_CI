@@ -49,8 +49,8 @@ cd $OWD
 export LD_LIBRARY_PATH=$OWD/${LAPACK}
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-chmod +x Miniconda-3.0.5-Linux-x86_64.sh
-./Miniconda-3.0.5-Linux-x86_64.sh -b -p $OWD/anaconda
+chmod +x Miniconda-3.7.0-Linux-x86_64.sh
+./Miniconda-3.7.0-Linux-x86_64.sh -b -p $OWD/anaconda
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/anaconda/lib
 export C_INCLUDE_PATH=$OWD/anaconda/include:$C_INCLUDE_PATH
