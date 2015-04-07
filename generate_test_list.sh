@@ -13,6 +13,9 @@ DAGMC/tests/dagsolid_unit_tests --gtest_list_tests  | python gen_test_list.py DA
 DAGMC/tests/uwuw_unit_tests --gtest_list_tests | python gen_test_list.py UWUW.
 DAGMC/tests/uwuw_unit_tests --gtest_list_tests | python gen_test_list.py UWUW. >> tasklist.nmi
 
+DAGMC/tests/uwuw_unit_tests_tally --gtest_list_tests | python gen_test_list.py UWUWTally.
+DAGMC/tests/uwuw_unit_tests_tally --gtest_list_tests | python gen_test_list.py UWUWTally. >> tasklist.nmi
+
 # Add Tally unit tests
 DAGMC/tests/test_KDEKernel --gtest_list_tests | python gen_test_list.py KDEKernel.
 DAGMC/tests/test_KDEKernel --gtest_list_tests | python gen_test_list.py KDEKernel. >> tasklist.nmi
@@ -40,6 +43,9 @@ DAGMC/tests/test_CellTally --gtest_list_tests | python gen_test_list.py CellTall
 
 DAGMC/tests/test_KDEMeshTally --gtest_list_tests | python gen_test_list.py KDEMeshTally.
 DAGMC/tests/test_KDEMeshTally --gtest_list_tests | python gen_test_list.py KDEMeshTally. >> tasklist.nmi
+
+DAGMC/tests/test_TrackLengthMeshTally --gtest_list_tests | python gen_test_list.py TrackLengthMeshTally.
+DAGMC/tests/test_TrackLengthMeshTally --gtest_list_tests | python gen_test_list.py TrackLengthMeshTally. >> tasklist.nmi
 
 exit $?
 
