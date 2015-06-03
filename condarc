@@ -1,0 +1,14 @@
+# This is a sample .condarc file
+# Channel locations override conda defaults, i.e., conda will
+# search *only* the channels listed here, in the order given. Use "defaults" to
+# automatically include all default channels. 
+
+always_yes: True
+
+channels:
+  - https://conda.binstar.org/pyne
+  - https://conda.binstar.org/cyclus
+  - asmeurer
+  - trent
+  - defaults
+

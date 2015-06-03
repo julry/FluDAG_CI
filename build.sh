@@ -39,10 +39,10 @@ make install
 #python setup.py --iMesh-path=$OWD/anaconda install --prefix=$OWD/anaconda 
 
 # make PyNE
-cd ..
-cd pyne
-python setup.py install --prefix=$OWD/anaconda --hdf5=$OWD/anaconda -- -DMOAB_INCLUDE_DIR=$OWD/anaconda/include -DMOAB_LIBRARY=$OWD/anaconda/lib
-env
+#cd ..
+#cd pyne
+#python setup.py install --prefix=$OWD/anaconda --hdf5=$OWD/anaconda -- -DMOAB_INCLUDE_DIR=$OWD/anaconda/include -DMOAB_LIBRARY=$OWD/anaconda/lib
+#env
 
 # With the conda build, all libraries are in anaconda/lib
 # export LD_LIBRARY_PATH=$OWD/anaconda/lib
@@ -74,8 +74,8 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$OWD/geant4/lib
 mkdir -p $OWD/DAGMC/bld
 cd $OWD/DAGMC/bld
 cmake ../. -DMOAB_DIR=$OWD/anaconda/lib -DBUILD_FLUKA=ON -DFLUKA_DIR=$FLUPRO -DBUILD_GEANT4=ON -DGEANT4_DIR=$OWD/geant4/ -DBUILD_TALLY=ON -DCMAKE_INSTALL_PREFIX=$OWD/DAGMC
-make 
-make install
+# make 
+# make install
  
 # Wrap up the results for downloading
 cd $OWD
