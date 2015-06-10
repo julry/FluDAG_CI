@@ -1,8 +1,8 @@
 run_type = test
 inputs   = fetch/dagmc-ci.git, fetch/conda-recipes.git, fetch/miniconda_linux.url, fetch/pytaps.url, fetch/dagmc.nightly.git, fluka.scp, fetch/geant4.url, fetch/lapack.url, lapack.scp
 x86_64_Debian7_remote_pre_declare  = build_fast_lapack.sh
-x86_64_Ubuntu12_remote_pre_declare = build.sh
-x86_64_Fedora20_remote_pre_declare = build.sh
+x86_64_Ubuntu12_remote_pre_declare = build_fast.sh
+x86_64_Fedora20_remote_pre_declare = build_fast.sh
 remote_declare = generate_test_list.sh
 remote_task    = run-test.sh
 platforms      = x86_64_Debian7, x86_64_Ubuntu12, x86_64_Fedora20

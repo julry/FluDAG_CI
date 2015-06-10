@@ -36,16 +36,6 @@ fi
 conda_build pyne
 ######################################
 
-# cd $OWD/moab
-# autoreconf -fi
-# ./configure --prefix=$OWD/anaconda --enable-optimize --enable-shared --disable-debug --without-netcdf --enable-dagmc --with-hdf5=$OWD/anaconda
-# make
-# make install
-cd $OWD
-
-# build and install pyne conda package
-conda_build pyne
-
 export FLUPRO=$OWD/FLUKA
 export FLUFOR=gfortran
 
