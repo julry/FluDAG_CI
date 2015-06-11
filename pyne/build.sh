@@ -19,7 +19,7 @@ else
 fi
 
 ${PYTHON} setup.py install
-nuc_data_make
+# nuc_data_make
 
 #
 # Annoying hack for copying dlls

@@ -5,7 +5,7 @@ set -e
 # original working directory
 OWD=`pwd`
 
-./lapack.sh
+source lapack.sh
 
 # Install conda - this runs the miniconda script
 # installs a .condarc that's mostly about binstar - do I need?
@@ -19,6 +19,11 @@ OWD=`pwd`
 # conda build ... and makes the tar -uf happen
 ######################################
 source conda_env.sh
+# get glibc version, minorly apologetic for this.
+# jcz note:  turns out this build is run on Debian7 and it apparently has an outdated glibc
+export LDD_VER="$(ldd --version)"
+export GLIBC_MAJOR_VERSION=$(python -c "print('''${LDD_VER}'''.splitlines()[0].split()[-1].split('.')[0])")
+export GLIBC_MINOR_VERSION=$(python -c "print('''${LDD_VER}'''.splitlines()[0].split()[-1].split('.')[1])")
 ######################################
 
 # install deps
@@ -31,7 +36,12 @@ if [[ "$MINICONDA_PYVER" == "2" ]]; then
   conda install pytaps
 fi
 
-# build and install pyne conda package
+# jcz note -- installing glibc prior to conda_build pyne
+# on Debian 7 produced a segfault during the pyne build.
+if [ "14" -gt "$GLIBC_MINOR_VERSION" ]; then
+  conda install glibc
+fi
+#build and install pyne conda package
 ######################################
 conda_build pyne
 ######################################
