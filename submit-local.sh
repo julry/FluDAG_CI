@@ -44,10 +44,15 @@ scp_file  = $HOME/fluka/*
 recursive = true
 ">$path/fluka.scp
 
-#echo \
-#"method   = scp
-#scp_file  = $path/gen_test_list.py
-#recursive = true
-#">$path/gen_test_list.py.scp
- 
-nmi_submit $1
+# Get all files from the 
+# CALLING directory, not the
+# REPOSITORY
+echo "
+method    = scp
+scp_file  = ${path}/*
+recursive = true
+" > ${path}/fetch/dagmc-ci-local.scp
+
+cp $1 local-$1
+sed -i 's:fetch/dagmc-ci.git:fetch/dagmc-ci-local.scp:' local-$1
+nmi_submit local-$1
