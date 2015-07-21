@@ -21,13 +21,20 @@ source conda_env.sh
 
 # install deps
 ######################################
-conda install nose pytables hdf5 scipy cython cmake numpy moab
+conda install nose pytables hdf5 scipy cython cmake numpy 
 ######################################
 
+# Build moab separately, not in conda, due to build failures for some platforms
+cd moab
+autoreconf -fi
+./configure --prefix=$OWD/anaconda --enable-optimize --enable-shared --disable-debug --without-netcdf --enable-dagmc --with-hdf5=$OWD/anaconda
+make
+make install 
 # Install PyTAPS on Python 2 only
-if [[ "$MINICONDA_PYVER" == "2" ]]; then
-  conda install pytaps
-fi
+#if [[ "$MINICONDA_PYVER" == "2" ]]; then
+#  conda install pytaps
+#fi
+cd $OWD
 
 # build and install pyne conda package
 ######################################
@@ -68,8 +75,9 @@ make
 make install
  
 cd $OWD
-mv results.tar pyne-pkgs.tar
-tar -pczf results.tar.gz pyne-pkgs.tar anaconda 
+#mv results.tar pyne-pkgs.tar
+#tar -pczf results.tar.gz pyne-pkgs.tar anaconda 
+tar -pczf results.tar.gz anaconda DAGMC
 echo ""
 echo "Results Listing"
 echo "---------------"

@@ -60,7 +60,7 @@ $ ./submit.sh dagmc.run-spec    // RIGHT
 
 and not 
 
-$ ./nmi_submit dagmc.run-spec   // WRONG
+$ nmi_submit dagmc.run-spec     // WRONG
 
 Initiating a job
 ________________

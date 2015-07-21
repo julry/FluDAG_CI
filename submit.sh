@@ -44,10 +44,4 @@ scp_file  = $HOME/fluka/*
 recursive = true
 ">$path/fluka.scp
 
-#echo \
-#"method   = scp
-#scp_file  = $path/gen_test_list.py
-#recursive = true
-#">$path/gen_test_list.py.scp
- 
 nmi_submit $1
