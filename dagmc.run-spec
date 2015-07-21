@@ -1,5 +1,5 @@
 run_type = test
-inputs   = fetch/dagmc-ci.git, fetch/dagmc.git, fetch/conda-recipes.git, fetch/miniconda_linux.url, fluka.scp, fetch/geant4.url, fetch/lapack.url, lapack.scp
+inputs   = fetch/dagmc-ci.git, fetch/dagmc.git, fetch/moab.git, fetch/conda-recipes.git, fetch/miniconda_linux.url, fluka.scp, fetch/geant4.url, fetch/lapack.url, lapack.scp
 x86_64_Debian8_remote_pre_declare  = build_fast_lapack.sh
 x86_64_Fedora20_remote_pre_declare = build_fast.sh
 x86_64_Fedora21_remote_pre_declare = build_fast_lapack.sh
