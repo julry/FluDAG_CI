@@ -28,14 +28,22 @@ export GLIBC_MINOR_VERSION=$(python -c "print('''${LDD_VER}'''.splitlines()[0].s
 
 # install deps
 ######################################
-conda install nose pytables hdf5 scipy cython cmake numpy moab
+conda install nose pytables hdf5 scipy cython cmake numpy
 ######################################
 
 # Install PyTAPS on Python 2 only
-if [[ "$MINICONDA_PYVER" == "2" ]]; then
-  conda install pytaps
-fi
+#if [[ "$MINICONDA_PYVER" == "2" ]]; then
+#  conda install pytaps
+#fi
 
+# Build moab separately, not in conda, due to build failures for some platforms
+cd moab
+autoreconf -fi
+./configure --prefix=$OWD/anaconda --enable-optimize --enable-shared --disable-debug --without-netcdf --enable-dagmc --with-hdf5=$OWD/anaconda
+make
+make install 
+
+cd $OWD
 # jcz note -- installing glibc prior to conda_build pyne
 # on Debian 7 produced a segfault during the pyne build.
 if [ "14" -gt "$GLIBC_MINOR_VERSION" ]; then
@@ -76,8 +84,9 @@ make
 make install
  
 cd $OWD
-mv results.tar pyne-pkgs.tar
-tar -pczf results.tar.gz pyne-pkgs.tar anaconda 
+# mv results.tar pyne-pkgs.tar
+# tar -pczf results.tar.gz pyne-pkgs.tar anaconda 
+tar -pczf results.tar.gz anaconda DAGMC
 echo ""
 echo "Results Listing"
 echo "---------------"
